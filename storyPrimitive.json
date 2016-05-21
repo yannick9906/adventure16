@@ -1,0 +1,24 @@
+[
+  {
+    "type":"SimpleStory",
+    "text":"Willkommen, Mensch.",
+    "speaker":"Unknown",
+    "speakertype":"left",
+    "action": {
+      "type":"timer",
+      "value":5,
+      "goto":1
+    }
+  },
+  {
+    "type":"SimpleStory",
+    "text":"Ich bin B.E.N.",
+    "speaker":"Unknown",
+    "speakertype":"left",
+    "action": {
+      "type":"timer",
+      "value":5,
+      "goto":2
+    }
+  }
+]

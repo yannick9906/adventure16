@@ -1,3 +1,13 @@
+"""
+@license
+This work is licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International
+License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by-nc-sa/4.0/.
+
+@author Yannick Félix
+"""
+
 import tkinter as tk
 import tkinter.ttk as ttk
 
@@ -10,6 +20,10 @@ class GUserInput(object):
     buttonAnsD = None
 
     def __init__(self, master):
+        """
+        @
+        @param master:
+        """
         self.position = tk.Canvas(master=master, bg="green")
         self.buttonAnsA = ttk.Button(master=self.position, text="Antwort A")
         self.buttonAnsB = ttk.Button(master=self.position, text="Antwort B")
