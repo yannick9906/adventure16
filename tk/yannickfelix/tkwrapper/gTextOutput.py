@@ -6,12 +6,12 @@ import tkinter.ttk as ttk
 class GTextOutput(object):
     text = ""
     showing = 7
-    viewx = 30
+    viewx = 40
 
     label = None
 
     def __init__(self, master):
-        self.label = ttk.Label(master=master, font=("Courier", 12), text="Test", anchor="nw")
+        self.label = ttk.Label(master=master, font=("Courier", 12), text="Test", anchor="sw", background="red")
 
     def printMessage(self, text, side, name=""):
         nameLength = len(name+"> ")
