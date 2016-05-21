@@ -6,19 +6,16 @@ import tkinter.ttk as ttk
 class GTextOutput(object):
     text = ""
     showing = 7
-    viewx = 10
-    viewy = 0
+    viewx = 30
 
     label = None
 
     def __init__(self, master):
-        self.label = ttk.Label(master=master, font=("Courier", 12), text="Test")
+        self.label = ttk.Label(master=master, font=("Courier", 12), text="Test", anchor="nw")
 
-    def printMessage(self, text, side, name):
+    def printMessage(self, text, side, name=""):
         nameLength = len(name+"> ")
         lines = textwrap.wrap(text, self.viewx-nameLength)
-        print(lines)
-        #lines = str.split(text, "\n")
         if side == "left":
             self.text += name+"> " + lines[0] + "\n"
             lines.pop(0)
@@ -30,6 +27,12 @@ class GTextOutput(object):
             for line in lines:
                 lineLength = nameLength + len(line)
                 self.text += (" "*(self.viewx-lineLength)) + line + "\n"
+        elif side == "center":
+            lines = textwrap.wrap(text, self.viewx)
+            for line in lines:
+                lineLength = len(line)
+                self.text += (" " * ((self.viewx - lineLength)//2)) + line + "\n"
         self.text += "\n"
-        self.label.set(text=self.text)
-        print(self.text)
+        text = str.split(self.text, "\n")
+        self.text = "\n".join(text[-10:])
+        self.label.config(text=self.text)
