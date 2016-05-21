@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tk.yannickfelix.tkwrapper.gTextOutput import *
 from tk.yannickfelix.tkwrapper.gTextInput import *
+from tk.yannickfelix.tkwrapper.gUserInput import *
 
 
 class GWindow(object):
@@ -22,6 +23,8 @@ class GWindow(object):
         self.textoutput.label.place(x=0, y=0, width=402, height=550)
         self.textinput = GTextInput(master=self.mainFrame)
         self.textinput.entry.place(x=0, y=550, width=402, height=50)
+        self.userinput = GUserInput(master=self.mainFrame)
+        self.userinput.position.place(x=402, y=520, width=398, height=80)
 
 
 
