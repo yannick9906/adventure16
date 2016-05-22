@@ -9,11 +9,17 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 
 from tk.yannickfelix.tkwrapper.gWindow import *
+from tk.yannickfelix.jsonNetCode.cFilesystem import *
+from tk.yannickfelix.adventure16.cStoryController import *
 
 window = GWindow()
 
 window.textoutput.printMessage("Das ist ein Test", "left", "Tester")
 window.textoutput.printMessage("So so, dass glaubst auch nur du", "right", "Tester2")
 window.textoutput.printMessage("Tester2 wurde gemuted gemuted gemuted gemuted gemuted gemuted", "center")
+window.userinput.activateAnsButtons(10)
+story = StoryController()
+story.loadStory()
+print(Filesystem.loadFile("../../storyPrimitive.json"))
 window.window.mainloop()
 

@@ -20,9 +20,19 @@ class GTextOutput(object):
     label = None
 
     def __init__(self, master):
+        """
+        @rtype: GTextOutput
+        @param master: object
+        """
         self.label = ttk.Label(master=master, font=("Courier", 12), text="Test", anchor="sw", background="red")
 
     def printMessage(self, text, side, name=""):
+        """
+        Prints the requested message onto the Label
+        @param text: str
+        @param side: str
+        @param name: str
+        """
         nameLength = len(name+"> ")
         lines = textwrap.wrap(text, self.viewx-nameLength)
         if side == "left":

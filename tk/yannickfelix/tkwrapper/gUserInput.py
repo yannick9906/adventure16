@@ -38,10 +38,10 @@ class GUserInput(object):
         self.deactiveAnsButtons()
 
     def activateAnsButtons(self, select):
-        if (select << 1) & 1: self.buttonAnsA.config(state='active')
-        if (select << 2) & 1: self.buttonAnsB.config(state='active')
-        if (select << 3) & 1: self.buttonAnsC.config(state='active')
-        if (select << 4) & 1: self.buttonAnsD.config(state='active')
+        if (select >> 0) & 1: self.buttonAnsA.config(state='active')
+        if (select >> 1) & 1: self.buttonAnsB.config(state='active')
+        if (select >> 2) & 1: self.buttonAnsC.config(state='active')
+        if (select >> 3) & 1: self.buttonAnsD.config(state='active')
 
     def deactiveAnsButtons(self):
         self.buttonAnsA.config(state='disabled')
