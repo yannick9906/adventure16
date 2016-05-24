@@ -1,0 +1,22 @@
+{
+  "0": {
+    "class": "drone",
+    "name": "Dr0n3zius",
+    "type": "transport",
+    "energy": 100,
+    "inventory": {
+      "size": 5,
+      "items": [
+        {
+          "id": 0,
+          "amount": 1
+        },
+        {
+          "id": 0,
+          "amount": 1
+        }
+      ]
+    }
+  },
+  "1": {"": ""}
+}
