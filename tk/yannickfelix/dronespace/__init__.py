@@ -7,3 +7,13 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+from .cDockingStation import *
+from .cDrone import *
+from .cInformationTerminal import *
+from .cInventory import *
+from .cItem import *
+from .cPlayer import *
+from .cShip import *
+
+__all__ = [DockingStation, Drone, InformationTerminal, Inventory, Item, Player, Ship]
+__all__ = ['DockingStation', 'Drone', 'InformationTerminal', 'Inventory', 'Item', 'Player', 'Ship']

@@ -14,12 +14,20 @@ import tkinter.ttk as ttk
 
 class GTextInput(object):
     entry = None
+    lastString = ""
 
     def __init__(self, master):
         self.entry = ttk.Entry(master=master)
+        self.entry.bind("<Return>", self.onEnterUp)
 
     def getUserText(self):
-        return self.entry.get()
+        string = self.lastString
+        self.lastString = ""
+        return string
+
+    def onEnterUp(self, event=None):
+        self.lastString = self.entry.get()
+        self.clearUserText()
 
     def clearUserText(self):
-        self.entry.config(text="")
+        self.entry.delete(0, 'end')

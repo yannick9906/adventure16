@@ -9,18 +9,18 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 import time
 
-from tk.yannickfelix.tkwrapper.gWindow import *
-from tk.yannickfelix.jsonNetCode.cFilesystem import *
-from tk.yannickfelix.adventure16.cStoryController import *
-
+from tk.yannickfelix.tkwrapper import *
+from tk.yannickfelix.cGamecontroller import *
 window = GWindow()
 
-story = StoryController(window.textoutput)
-story.loadStory()
-story.update()
+# story = StoryController(window.textoutput)
+# story.loadStory()
+# story.update()
+gc = Gamecontroller(window.textoutput, window.textinput, window.userinput)
 
 while True:
     window.window.update_idletasks()
     window.window.update()
-    story.update()
+    # story.update()
+    gc.update()
     time.sleep(0.02)
