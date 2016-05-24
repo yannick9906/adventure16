@@ -6,7 +6,7 @@
     "speakertype":"left",
     "action": {
       "type":"timer",
-      "value":5,
+      "value":2,
       "goto":1
     }
   },
@@ -18,7 +18,7 @@
     "action": {
       "type":"timer",
       "value":5,
-      "goto":2
+      "goto":0
     }
   }
 ]

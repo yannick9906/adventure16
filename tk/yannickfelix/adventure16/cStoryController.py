@@ -13,14 +13,25 @@ from tk.yannickfelix.adventure16.storytypes.sSimpleStory import *
 
 class StoryController(object):
     story = []
+    currStoryID = 0
+    textoutput = None
 
-    def __init__(self):
-        pass
+    def __init__(self, textoutput):
+        self.textoutput = textoutput
 
     def loadStory(self):
         for i, e in enumerate(Filesystem.loadFile("../../storyPrimitive.json")):
             self.story.append(self.parseStory(e))
 
-    def parseStory(self, code):
+    @staticmethod
+    def parseStory(code):
         if code['type'] == "SimpleStory":
             return SimpleStory.fromDict(code)
+
+    def update(self):
+        if self.story[self.currStoryID].canRun():
+            self.story[self.currStoryID].runStory(self.textoutput)
+        else:
+            self.story[self.currStoryID].runAction()
+            if self.story[self.currStoryID].action.completeAction() == 1:
+                self.currStoryID = self.story[self.currStoryID].action.goto

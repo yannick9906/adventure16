@@ -16,6 +16,7 @@ class GTextOutput(object):
     text = ""
     showing = 7
     viewx = 40
+    viewymax = 40
 
     label = None
 
@@ -53,5 +54,5 @@ class GTextOutput(object):
                 self.text += (" " * ((self.viewx - lineLength)//2)) + line + "\n"
         self.text += "\n"
         text = str.split(self.text, "\n")
-        self.text = "\n".join(text[-10:])
+        self.text = "\n".join(text[-self.viewymax:])
         self.label.config(text=self.text)
