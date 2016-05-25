@@ -29,7 +29,7 @@ class Drone(object):
         self.entityID = entityID
         self.name = name
         self.type = type
-        self.inventory = Inventory()
+        self.inventory = Inventory.fromDict(inventory)
         self.energy = energy
 
     @staticmethod

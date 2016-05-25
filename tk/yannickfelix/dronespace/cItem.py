@@ -9,6 +9,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 from tk.yannickfelix.jsonNetCode import *
 
+
 class Item(object):
     id = 0
     icon = ""

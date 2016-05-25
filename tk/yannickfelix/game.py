@@ -17,7 +17,7 @@ window = GWindow()
 # story.loadStory()
 # story.update()
 gc = Gamecontroller(window.textoutput, window.textinput, window.userinput)
-
+gc.load()
 while True:
     window.window.update_idletasks()
     window.window.update()

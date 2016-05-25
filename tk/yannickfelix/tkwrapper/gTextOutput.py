@@ -10,7 +10,8 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 import textwrap
 import tkinter.ttk as ttk
-
+import tkinter as tk
+from tkinter.font import Font
 
 class GTextOutput(object):
     text = ""
@@ -25,7 +26,8 @@ class GTextOutput(object):
         @rtype: GTextOutput
         @param master: object
         """
-        self.label = ttk.Label(master=master, font=("Courier", 12), text="Test", anchor="sw", background="red")
+        self.label = tk.Text(master=master, font=("Courier", 12), background="red")
+        self.label.tag_configure("TEST", background="green")
 
     def printMessage(self, text, side, name=""):
         """
@@ -48,6 +50,8 @@ class GTextOutput(object):
                 for line in lines:
                     lineLength = nameLength + len(line)
                     self.text += (" "*(self.viewx-lineLength)) + line + "\n"
+                    self.label.tag_add("TEST",len(self.text.split("\n"))+".0",len(self.text.split("\n"))+"."+self.viewymax)
+
             elif side == "center":
                 lines = textwrap.wrap(text, self.viewx)
                 for line in lines:
@@ -56,4 +60,4 @@ class GTextOutput(object):
             self.text += "\n"
             text = str.split(self.text, "\n")
             self.text = "\n".join(text[-self.viewymax:])
-            self.label.config(text=self.text)
+            self.label.insert("END", self.text)

@@ -15,7 +15,7 @@ class Inventory(object):
     items = []
     size = 0
 
-    def __init__(self, items, size = 5):
+    def __init__(self, items, size=5):
         """
 
 
@@ -23,7 +23,7 @@ class Inventory(object):
         @param size: int
         """
         for item in items:
-            self.items.append(Item)
+            self.items.append(Item.fromDict(item))
         self.size = size
 
     @staticmethod
@@ -33,8 +33,8 @@ class Inventory(object):
     def addItem(self, item, slot):
         """
         Adds an Itemobject to this Inventory
-        :param slot: int
-        :param item: Item
+        @param slot: int
+        @param item: Item
         :rtype: bool
         """
         pass
@@ -42,7 +42,7 @@ class Inventory(object):
     def removeItem(self, item: Item):
         """
         Removes an Itemobject from this Inventory
-        :param item: Item
+        @param item: Item
         :rtype: bool
         """
         pass
@@ -50,7 +50,7 @@ class Inventory(object):
     def removeItemFromSlot(self, slot):
         """
         Removes an Itemobject from this Inventory
-        :param slot: int
+        @param slot: int
         :rtype: bool
         """
         pass
@@ -58,7 +58,7 @@ class Inventory(object):
     def isItemInInventory(self, item):
         """
         Checks if an Itemobject is in this inventory
-        :param item: Item
+        @param item: Item
         :rtype: bool
         """
         pass
@@ -77,7 +77,7 @@ class Inventory(object):
         """
         Returns the Itemobject currently in this slot
         :rtype: Item[]
-        :param slot: int
+        @param slot: int
         :return:
         """
         return self.items[slot]
@@ -85,7 +85,7 @@ class Inventory(object):
     def moveItem(self, item, to):
         """
         Moves an Item from this Inventory to another
-        :param item: Item
-        :param to: Inventory
+        @param item: Item
+        @param to: Inventory
         """
         pass

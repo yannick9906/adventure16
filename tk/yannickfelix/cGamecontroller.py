@@ -11,6 +11,7 @@ from random import randint
 
 from tk.yannickfelix.tkwrapper import *
 from tk.yannickfelix.dronespace import *
+from tk.yannickfelix.jsonNetCode import *
 from tkinter import *
 from tkinter import messagebox
 
@@ -20,6 +21,7 @@ class Gamecontroller(object):
     textinput = None
     userinput = None
     wins = []
+    entities = []
 
     def __init__(self, textoutput, textinput, userinput):
         """
@@ -31,6 +33,14 @@ class Gamecontroller(object):
         self.textinput = textinput
         self.textoutput = textoutput
         self.userinput = userinput
+
+    def load(self):
+        json = Filesystem.loadFile("../../savegame.json")
+        i = 0
+        for elem in json:
+            if json[elem]['class'] == "drone":
+                self.entities.append(Drone.fromDict(i, json[elem]))
+            i+=1
 
     def update(self):
         cmd = self.textinput.getUserText()
@@ -53,8 +63,8 @@ class Gamecontroller(object):
                 self.openWindow()
 
     def openWindow(self,arg=None):
-        if len(self.wins) > 20:
-            self.wins[randint(1, len(self.wins))].destroy()
+        if len(self.wins) > 0:
+            self.wins[randint(1, len(self.wins)-1)].destroy()
         t = Toplevel()
         t.title("Error")
         self.wins.append(t)
