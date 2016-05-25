@@ -10,16 +10,25 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 from tk.yannickfelix.dronespace.cItem import *
 
+
 class Inventory(object):
     items = []
     size = 0
 
-    def __init__(self):
+    def __init__(self, items, size = 5):
         """
 
-        :rtype: Inventory
+
+        @param items: list
+        @param size: int
         """
-        pass
+        for item in items:
+            self.items.append(Item)
+        self.size = size
+
+    @staticmethod
+    def fromDict(dict):
+        return Inventory(dict['items'], dict['size'])
 
     def addItem(self, item, slot):
         """
