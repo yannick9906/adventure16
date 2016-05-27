@@ -27,7 +27,7 @@ class GTextOutput(object):
         @rtype: GTextOutput
         @param master: object
         """
-        self.label = tk.Text(master=master, font=(self.font, 10), background="red")
+        self.label = tk.Text(master=master, font=(self.font, 10), background="black", fg="#18F500")
         self.label.tag_configure("TEST", font=(self.font, 10, "bold"))
 
     def printMessage(self, text, side, name=""):
