@@ -21,28 +21,31 @@ class GTextOutput(object):
     text = ""
     showing = 7
     viewx = 36
-    viewymax = 40
-    font = "JoystixMonospace-Regular"
+    viewymax = 45
+    fontsize = 18
+    #font = "JoystixMonospace-Regular"
+    font = "ProggySquareTTSZ"
 
     label = None
+    lastname = ""
+    writing = False
 
     def __init__(self, master):
         """
         @rtype: GTextOutput
         @param master: object
         """
-        self.loadfont("../../font.ttf")
-        self.label = tk.Text(master=master, font=(self.font, 10), background="black", fg="#18F500")
-        self.label.tag_configure("TEST", font=(self.font, 10, "bold"))
+        self.loadfont("../../font4.ttf")
+        self.label = tk.Text(master=master, font=(self.font, self.fontsize), background="black", fg="#18F500")
+        self.label.tag_configure("TEST", font=(self.font, self.fontsize, "bold"))
 
-    def printMessage(self, text, side, name=""):
+    def printMessage(self, text, side, name="", writing=True):
         """
         Prints the requested message onto the Label
         @param text: str
         @param side: str
         @param name: str
         """
-        self.text = ""
         if text != "":
             self.removeLastLine()
             nameLength = len(name+"> ")
@@ -69,16 +72,36 @@ class GTextOutput(object):
             self.text += "\n"
             text = str.split(self.text, "\n")
             self.text = "\n".join(text[-self.viewymax:])
-            self.label.insert(tk.END, self.text)
-            if side == "left": self.highlight_pattern(name+">", "TEST")
-            elif side == "right": self.highlight_pattern("<"+name, "TEST")
+            if writing:
+                self.writing = True
+                lastname = name
+            else:
+                self.label.insert(tk.END, self.text)
+                if side == "left": self.highlight_pattern(name+">", "TEST")
+                elif side == "right": self.highlight_pattern("<"+name, "TEST")
+                self.writing = False
+                self.text = ""
+            self.label.see(tk.END)
 
     def updateInputting(self, currInput):
-        self.removeLastLine()
-        caret = " "
-        if time.time() % 0.5 <= 0.25: caret = "_"
-        lineLength = len(currInput+caret+" <")
-        self.label.insert(tk.END, " "*(self.viewx-lineLength)+currInput+caret+" <")
+        if not self.writing:
+            self.removeLastLine()
+            caret = " "
+            if time.time() % 0.5 <= 0.25: caret = "_"
+            lineLength = len(currInput+" <")+1
+            self.label.insert(tk.END, " "*(self.viewx-lineLength)+currInput+caret+" <")
+            self.label.see(tk.END)
+
+    def writeTick(self):
+        if self.text != "":
+            char = self.text[:4]
+            self.label.insert(tk.END, char)
+            self.text = self.text[4:]
+        else:
+            self.writing = False
+            self.highlight_pattern(self.lastname + ">", "TEST")
+            self.highlight_pattern(">"+self.lastname, "TEST")
+        self.label.see(tk.END)
 
     def removeLastLine(self):
         self.label.delete('end -1 lines', 'end -1 lines lineend')

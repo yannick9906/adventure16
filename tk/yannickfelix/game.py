@@ -32,4 +32,4 @@ while running:
     window.window.update_idletasks()
     window.window.update()
     window.textinput.entry.focus()
-    time.sleep(0.02)
+    time.sleep(0.05)

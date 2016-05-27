@@ -47,9 +47,10 @@ class Gamecontroller(object):
             i+=1
 
     def update(self):
+        self.textoutput.writeTick()
         cmd = self.textinput.getUserText()
         self.textoutput.updateInputting(self.textinput.entry.get())
-        self.textoutput.printMessage(cmd, "right", "")
+        self.textoutput.printMessage(cmd, "right", "", False)
         if self.entities[0].runCommand(cmd) == -1:
             if cmd == " ":
                 self.textoutput.printMessage("Hey, hör auf damit!", "left", "Kitteh")
