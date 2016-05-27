@@ -11,16 +11,24 @@ import time
 
 from tk.yannickfelix.tkwrapper import *
 from tk.yannickfelix.cGamecontroller import *
+
+
+def close():
+    global running
+    running = False
+
+
 window = GWindow()
+running = True
 
 # story = StoryController(window.textoutput)
 # story.loadStory()
 # story.update()
 gc = Gamecontroller(window.textoutput, window.textinput, window.userinput)
 gc.load()
-while True:
+window.window.protocol("WM_DELETE_WINDOW", close)
+while running:
+    gc.update()
     window.window.update_idletasks()
     window.window.update()
-    # story.update()
-    gc.update()
     time.sleep(0.02)

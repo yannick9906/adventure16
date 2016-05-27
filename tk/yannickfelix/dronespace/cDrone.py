@@ -16,6 +16,7 @@ class Drone(object):
     type = ""
     inventory = None
     energy = 0
+    commands = []
 
     def __init__(self, entityID, name, type, inventory, energy):
         """
