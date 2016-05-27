@@ -12,6 +12,8 @@ import textwrap
 import tkinter.ttk as ttk
 import tkinter as tk
 from tkinter.font import Font
+from ctypes import windll, byref, create_unicode_buffer, create_string_buffer
+
 
 class GTextOutput(object):
     text = ""
@@ -27,6 +29,7 @@ class GTextOutput(object):
         @rtype: GTextOutput
         @param master: object
         """
+        self.loadfont("../../font.ttf")
         self.label = tk.Text(master=master, font=(self.font, 10), background="black", fg="#18F500")
         self.label.tag_configure("TEST", font=(self.font, 10, "bold"))
 
@@ -50,8 +53,9 @@ class GTextOutput(object):
             elif side == "right":
                 self.text += (" "*(self.viewx-nameLength-len(lines[0]))) + lines[0] + " <"+ name + "\n"
                 lines.pop(0)
+                lines = textwrap.wrap(" ".join(lines), self.viewx)
                 for line in lines:
-                    lineLength = nameLength + len(line)
+                    lineLength = len(line)
                     self.text += (" "*(self.viewx-lineLength)) + line + "\n"
 
             elif side == "center":
@@ -72,6 +76,11 @@ class GTextOutput(object):
 
         If 'regexp' is set to True, pattern will be treated as a regular
         expression according to Tcl's regular expression syntax.
+        @param pattern: str
+        @param tag: str
+        @param start: str
+        @param end: str
+        @param regexp: bool
         """
 
         start = self.label.index(start)
@@ -88,3 +97,35 @@ class GTextOutput(object):
             self.label.mark_set("matchStart", index)
             self.label.mark_set("matchEnd", "%s+%sc" % (index, count.get()))
             self.label.tag_add(tag, "matchStart", "matchEnd")
+
+    def loadfont(self, fontpath, private=True, enumerable=False):
+        """
+        Makes fonts located in file `fontpath` available to the font system.
+
+        See https://msdn.microsoft.com/en-us/library/dd183327(VS.85).aspx
+        @param private: if True, other processes cannot see this font, and this font will be unloaded when the process dies
+        @type private: bool
+        @param enumerable: if True, this font will appear when enumerating fonts
+        @type enumerable: bool
+        @return:
+
+        """
+        # This function was taken from
+        # https://github.com/ifwe/digsby/blob/f5fe00244744aa131e07f09348d10563f3d8fa99/digsby/src/gui/native/win/winfonts.py#L15
+        # This function is written for Python 2.x. For 3.x, you
+        # have to convert the isinstance checks to bytes and str
+        FR_PRIVATE = 0x10
+        FR_NOT_ENUM = 0x20
+
+        if isinstance(fontpath, bytes):
+            pathbuf = create_string_buffer(fontpath)
+            AddFontResourceEx = windll.gdi32.AddFontResourceExA
+        elif isinstance(fontpath, str):
+            pathbuf = create_unicode_buffer(fontpath)
+            AddFontResourceEx = windll.gdi32.AddFontResourceExW
+        else:
+            raise TypeError('fontpath must be of type str or unicode')
+
+        flags = (FR_PRIVATE if private else 0) | (FR_NOT_ENUM if not enumerable else 0)
+        numFontsAdded = AddFontResourceEx(byref(pathbuf), flags, 0)
+        return bool(numFontsAdded)

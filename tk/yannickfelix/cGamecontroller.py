@@ -34,33 +34,38 @@ class Gamecontroller(object):
         self.textoutput = textoutput
         self.userinput = userinput
 
+        self.textoutput.printMessage("B.E.N.'s Dronecontroller v2.3b", "left")
+        self.textoutput.printMessage("Starting Services...", "left")
+        self.textoutput.printMessage("Ready.", "left")
+
     def load(self):
         json = Filesystem.loadFile("../../savegame.json")
         i = 0
         for elem in json:
             if json[elem]['class'] == "drone":
-                self.entities.append(Drone.fromDict(i, json[elem]))
+                self.entities.append(Drone.fromDict(i, json[elem],self.textoutput.printMessage))
             i+=1
 
     def update(self):
         cmd = self.textinput.getUserText()
         self.textoutput.printMessage(cmd, "right", "")
-        if cmd == " ":
-            self.textoutput.printMessage("Hey, hör auf damit!", "left", "Kitteh")
-        elif cmd == " ":
-            self.textoutput.printMessage("Naa toll, jetzt hast du's kaputt gemacht", "left", "Kitteh")
-        elif cmd == "Hover kitteh":
-            self.textoutput.printMessage("Looking for purmision to land", "left", "Hover Kitteh")
-        elif cmd == "map()":
-            self.textoutput.printMessage("Dis FODMAP is stoopid. I sees no noms at all.", "left", "Space Kitteh")
-        elif cmd == "attack()":
-            self.textoutput.printMessage("disapproves ur submishinz", "left", "Moderator Kitteh")
-        elif cmd == "zombieh kittehs":
-            self.textoutput.printMessage("Zombieh Kittehs coming to cuddle you to death", "left", "")
-        elif cmd == "destroy.now()":
-            self.textoutput.printMessage("Mhh, naja wenn du willst...", "center")
-            for i in range(50):
-                self.openWindow()
+        if self.entities[0].runCommand(cmd) == -1:
+            if cmd == " ":
+                self.textoutput.printMessage("Hey, hör auf damit!", "left", "Kitteh")
+            elif cmd == " ":
+                self.textoutput.printMessage("Naa toll, jetzt hast du's kaputt gemacht", "left", "Kitteh")
+            elif cmd == "Hover kitteh":
+                self.textoutput.printMessage("Looking for purmision to land", "left", "Hover Kitteh")
+            elif cmd == "map()":
+                self.textoutput.printMessage("Dis FODMAP is stoopid. I sees no noms at all.", "left", "Space Kitteh")
+            elif cmd == "attack()":
+                self.textoutput.printMessage("disapproves ur submishinz", "left", "Moderator Kitteh")
+            elif cmd == "zombieh kittehs":
+                self.textoutput.printMessage("Zombieh Kittehs coming to cuddle you to death", "left", "")
+            elif cmd == "destroy.now()":
+                self.textoutput.printMessage("Mhh, naja wenn du willst...", "center")
+                for i in range(50):
+                    self.openWindow()
 
     def openWindow(self,arg=None):
         if len(self.wins) > 0:
