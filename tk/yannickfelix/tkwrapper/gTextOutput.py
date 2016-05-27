@@ -14,6 +14,8 @@ import tkinter as tk
 from tkinter.font import Font
 from ctypes import windll, byref, create_unicode_buffer, create_string_buffer
 
+import time
+
 
 class GTextOutput(object):
     text = ""
@@ -42,6 +44,7 @@ class GTextOutput(object):
         """
         self.text = ""
         if text != "":
+            self.removeLastLine()
             nameLength = len(name+"> ")
             lines = textwrap.wrap(text, self.viewx-nameLength-(nameLength*0.1))
             if side == "left":
@@ -69,6 +72,21 @@ class GTextOutput(object):
             self.label.insert(tk.END, self.text)
             if side == "left": self.highlight_pattern(name+">", "TEST")
             elif side == "right": self.highlight_pattern("<"+name, "TEST")
+
+    def updateInputting(self, currInput):
+        self.removeLastLine()
+        caret = " "
+        if time.time() % 0.5 <= 0.25: caret = "_"
+        lineLength = len(currInput+caret+" <")
+        self.label.insert(tk.END, " "*(self.viewx-lineLength)+currInput+caret+" <")
+
+    def removeLastLine(self):
+        self.label.delete('end -1 lines', 'end -1 lines lineend')
+        """textarr = self.text.split("\n")
+        textarr.pop()
+        self.text = "\n".join(textarr)
+        self.text += "\n"""
+
 
     def highlight_pattern(self, pattern, tag, start="1.0", end="end", regexp=False):
         """

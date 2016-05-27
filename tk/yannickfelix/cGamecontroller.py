@@ -48,6 +48,7 @@ class Gamecontroller(object):
 
     def update(self):
         cmd = self.textinput.getUserText()
+        self.textoutput.updateInputting(self.textinput.entry.get())
         self.textoutput.printMessage(cmd, "right", "")
         if self.entities[0].runCommand(cmd) == -1:
             if cmd == " ":
@@ -68,7 +69,7 @@ class Gamecontroller(object):
                     self.openWindow()
 
     def openWindow(self,arg=None):
-        if len(self.wins) > 0:
+        if len(self.wins) > 1:
             self.wins[randint(1, len(self.wins)-1)].destroy()
         t = Toplevel()
         t.title("Error")

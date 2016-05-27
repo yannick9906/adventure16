@@ -28,9 +28,9 @@ class GWindow(object):
         self.mainFrame = ttk.Frame(master=self.window)
         self.mainFrame.place(x=0, y=0, width=800, height=600)
         self.textoutput = GTextOutput(master=self.mainFrame)
-        self.textoutput.label.place(x=0, y=0, width=402, height=550)
+        self.textoutput.label.place(x=0, y=0, width=402, height=600)
         self.textinput = GTextInput(master=self.mainFrame)
-        self.textinput.entry.place(x=0, y=550, width=402, height=50)
+        self.textinput.entry.place(x=0, y=601, width=402, height=0)
         self.userinput = GUserInput(master=self.mainFrame)
         self.userinput.position.place(x=402, y=520, width=398, height=80)
 
