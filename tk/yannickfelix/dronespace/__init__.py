@@ -14,6 +14,7 @@ from .cInventory import *
 from .cItem import *
 from .cPlayer import *
 from .cShip import *
+from .cStdCommands import *
 
-__all__ = [DockingStation, Drone, InformationTerminal, Inventory, Item, Player, Ship]
-__all__ = ['DockingStation', 'Drone', 'InformationTerminal', 'Inventory', 'Item', 'Player', 'Ship']
+__all__ = [DockingStation, Drone, InformationTerminal, Inventory, Item, Player, Ship, StdCommands]
+__all__ = ['DockingStation', 'Drone', 'InformationTerminal', 'Inventory', 'Item', 'Player', 'Ship', 'StdCommands']

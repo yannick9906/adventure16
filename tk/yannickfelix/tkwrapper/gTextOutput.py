@@ -36,30 +36,34 @@ class GTextOutput(object):
         @param master: object
         """
         self.loadfont("../../font4.ttf")
-        self.label = tk.Text(master=master, font=(self.font, self.fontsize), background="black", fg="#18F500")
+        self.label = tk.Text(master=master, font=(self.font, self.fontsize), background="black", fg="#18F500", borderwidth=0)
         self.label.tag_configure("TEST", font=(self.font, self.fontsize, "bold"))
 
-    def printMessage(self, text, side, name="", writing=True):
+    def printMessage(self, text, side, name="",autowrap=True, writing=True):
         """
         Prints the requested message onto the Label
         @param text: str
         @param side: str
         @param name: str
         """
+        self.viewx = int(self.label.master.winfo_width() / 11.1)
         if text != "":
             self.removeLastLine()
             nameLength = len(name+"> ")
-            lines = textwrap.wrap(text, self.viewx-nameLength-(nameLength*0.1))
+            if autowrap: lines = textwrap.wrap(text, self.viewx-nameLength-(nameLength*0.1))
+            else: lines = text.split("\n")
             if side == "left":
                 self.text += name+"> " + lines[0] + "\n"
                 lines.pop(0)
-                lines = textwrap.wrap(" ".join(lines), self.viewx)
+                if autowrap: lines = textwrap.wrap(" ".join(lines), self.viewx)
+                else: lines = text.split("\n")[1:]
                 for line in lines:
                     self.text += line + "\n"
             elif side == "right":
                 self.text += (" "*(self.viewx-nameLength-len(lines[0]))) + lines[0] + " <"+ name + "\n"
                 lines.pop(0)
-                lines = textwrap.wrap(" ".join(lines), self.viewx)
+                if autowrap: lines = textwrap.wrap(" ".join(lines), self.viewx)
+                else: lines = text.split("\n")[1:]
                 for line in lines:
                     lineLength = len(line)
                     self.text += (" "*(self.viewx-lineLength)) + line + "\n"
@@ -102,6 +106,7 @@ class GTextOutput(object):
             self.highlight_pattern(self.lastname + ">", "TEST")
             self.highlight_pattern(">"+self.lastname, "TEST")
         self.label.see(tk.END)
+        self.viewx = int(self.label.winfo_width()/11.1)
 
     def removeLastLine(self):
         self.label.delete('end -1 lines', 'end -1 lines lineend')

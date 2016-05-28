@@ -9,6 +9,8 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 from random import randint
 
+import time
+
 from tk.yannickfelix.tkwrapper import *
 from tk.yannickfelix.dronespace import *
 from tk.yannickfelix.jsonNetCode import *
@@ -20,22 +22,51 @@ class Gamecontroller(object):
     textoutput = None
     textinput = None
     userinput = None
+    window = None
+    closeFunc = None
+    stdCmds = None
     wins = []
     entities = []
 
-    def __init__(self, textoutput, textinput, userinput):
+    def __init__(self, textoutput, textinput, userinput, window, closeFunc, globalvars):
         """
 
         @param textoutput: GTextOutput
         @param textinput: GTextInput
         @param userinput: GUserInput
+        @param window: GWindow
+        @param closeFunc: function
         """
         self.textinput = textinput
         self.textoutput = textoutput
         self.userinput = userinput
+        self.window = window
+        self.closeFunc = closeFunc
+        self.stdCmds = StdCommands(globalvars)
 
         self.textoutput.printMessage("B.E.N.'s Dronecontroller v2.3b", "left")
         self.textoutput.printMessage("Starting Services...", "left")
+        self.textoutput.printMessage("We're searching for files...", "left")
+        text = """
+                                     ,
+              ,-.       _,---._ __  / \\
+             /  )    .-'       `./ /   \\
+            (  (   ,'            `/    /|
+             \  `-"             \\'\   / |
+              `.              ,  \ \ /  |
+               /`.          ,'-`----Y   |
+              (            ;        |   '
+              |  ,-.    ,-'         |  /
+              |  | (   |    Files?  | /
+              )  |  \  `.___________|/
+              `--'   `--'
+        """
+        self.textoutput.printMessage(text, "left", "", False)
+        while self.textoutput.writing:
+            self.textoutput.writeTick()
+            self.window.window.update()
+            self.window.window.update_idletasks()
+            time.sleep(0.01)
         self.textoutput.printMessage("Ready.", "left")
 
     def load(self):
@@ -50,24 +81,8 @@ class Gamecontroller(object):
         self.textoutput.writeTick()
         cmd = self.textinput.getUserText()
         self.textoutput.updateInputting(self.textinput.entry.get())
-        self.textoutput.printMessage(cmd, "right", "", False)
-        if self.entities[0].runCommand(cmd) == -1:
-            if cmd == " ":
-                self.textoutput.printMessage("Hey, hör auf damit!", "left", "Kitteh")
-            elif cmd == " ":
-                self.textoutput.printMessage("Naa toll, jetzt hast du's kaputt gemacht", "left", "Kitteh")
-            elif cmd == "Hover kitteh":
-                self.textoutput.printMessage("Looking for purmision to land", "left", "Hover Kitteh")
-            elif cmd == "map()":
-                self.textoutput.printMessage("Dis FODMAP is stoopid. I sees no noms at all.", "left", "Space Kitteh")
-            elif cmd == "attack()":
-                self.textoutput.printMessage("disapproves ur submishinz", "left", "Moderator Kitteh")
-            elif cmd == "zombieh kittehs":
-                self.textoutput.printMessage("Zombieh Kittehs coming to cuddle you to death", "left", "")
-            elif cmd == "destroy.now()":
-                self.textoutput.printMessage("Mhh, naja wenn du willst...", "center")
-                for i in range(50):
-                    self.openWindow()
+        self.textoutput.printMessage(cmd, "right", "", True, False)
+        self.stdCmds.handleCommand(cmd)
 
     def openWindow(self,arg=None):
         if len(self.wins) > 1:
