@@ -105,8 +105,8 @@ class GWindow(tk.Tk):
             self.attributes("-fullscreen", 0) # Turn off fullscreen
 
             # Set the window into its inital size
-            startx = (w * .5) - (self.initalsize[0] * .5)  # Calculations for centering the window
-            starty = (h * .5) - (self.initalsize[1] * .5)
+            startx = int((w * .5) - (self.initalsize[0] * .5))  # Calculations for centering the window
+            starty = int((h * .5) - (self.initalsize[1] * .5))
             self.geometry("{0}x{1}+{2}+{3}".format(self.initalsize[0], self.initalsize[1], startx, starty)) # Set the size of the window
             self.state = "normal" # Should turn of Maximize
             # Once again, update the window
@@ -119,7 +119,7 @@ class GWindow(tk.Tk):
             # TODO write something
 
             time.sleep(1) # For the special effect :)
-            self.attributes("fullscreen", 1) # Turn on fullscreen and remove all decorations
+            self.attributes("-fullscreen", 1) # Turn on fullscreen and remove all decorations
             self.geometry("{0}x{1}-1-1".format(w, h)) # Set the size of the screen as window size
             super().update_idletasks() # Needed to let the WM update the window
             self.attributes("-topmost", "yes") # Makes the window above everything else

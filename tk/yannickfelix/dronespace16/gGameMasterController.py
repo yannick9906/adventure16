@@ -24,9 +24,9 @@ class GameMasterController(object):
         """
         # Init globalvars
         self.globalvars = {
-            "res_folder": "../../../res/",
+            "res_folder": "../../res/",
             "running": True,
-            "fullscreen": True,
+            "fullscreen": False,
             "class_gui": None,
             "class_gconsole": None,
             "class_ginput": None,
@@ -63,7 +63,11 @@ class GameMasterController(object):
         self.globalvars['class_gconsole'].printMessage("Ready.", "left")
         self.globalvars['class_gconsole'].waitAndWrite()
 
-        while self.globalvars['running']: self.update()
+        while self.globalvars['running']:
+            self.update()
+            time.sleep(0.02)
+        self.globalvars['class_gui'].destroy()
+        self.globalvars['class_gui'].quit()
 
     def load(self):
         pass
@@ -84,7 +88,3 @@ class GameMasterController(object):
                 self.globalvars['class_gconsole'].printMessage("Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
         self.globalvars['class_gui'].update()
         self.globalvars['class_ginput'].focus()
-        time.sleep(0.02)
-
-
-mc = GameMasterController()

@@ -12,5 +12,5 @@ from tk.yannickfelix.dronespace16.cStdCommands import *
 from tk.yannickfelix.dronespace16.gGameMasterController import *
 from tk.yannickfelix.dronespace16.cActionController import *
 
-__all__ = [StdCommands, gGameMasterController, ActionController]
+__all__ = [StdCommands, GameMasterController, ActionController]
 __all__ = ['StdCommands', 'GameMasterController', 'ActionController']
