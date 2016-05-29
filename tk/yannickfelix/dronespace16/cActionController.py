@@ -17,22 +17,28 @@ class ActionController(object):
 
     def handleAction(self, action, args):
         if action == "print":
-            pass
+            self.ac_print(args)
         elif action == "setVar":
-            pass
+            self.ac_setVar(args)
         elif action == "invVar":
-            pass
+            self.ac_invVar(args)
         elif action == "conditionVar":
-            pass
+            self.ac_condition_Var(args)
 
     def valueof(self, value):
-        if value.startswith("$"):
-            return self.globalvars.get(value[1:], False)
-        else:
-            return value
+        if isinstance(value, str):
+            if value.startswith("$"):
+                return self.globalvars.get(value[1:], False)
+            else: return value
+        else: return value
 
     def ac_print(self, args):
-        self.globalvars['class_guiConsole'].printMessage(args['text'], args['args'][0], args['args'][1], args['args'][2], args['args'][3])
+        text = args['text']
+        arg0 = args['args'][0]
+        arg1 = args['args'][1]
+        arg2 = args['args'][2]
+        arg3 = args['args'][3]
+        self.globalvars['class_gconsole'].printMessage(text, arg0, arg1, arg2, arg3)
 
     def ac_setVar(self, args):
         self.globalvars[args['var']] = self.valueof(args['value'])

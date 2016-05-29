@@ -1,9 +1,12 @@
 {
   "exit":{
-    "action":"close"
+    "action": "setVar",
+    "var": "running",
+    "value": false
   },
   "fullscreen":{
-    "action":"fullscreen"
+    "action": "invVar",
+    "var": "fullscreen"
   },
   "anti bug kitteh": {
     "action":"print",
@@ -60,7 +63,7 @@
     "args":["left","",true,true],
     "text":"Sure it would."
   },
-  "Am I Fullscreen?":{
+  "am i fullscreen?":{
     "action":"conditionVar",
     "operation":"equal",
     "var1":"$fullscreen",

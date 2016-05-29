@@ -10,8 +10,8 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 import time
 
 from tk.yannickfelix.dronespace16.gui import *
-from yannickfelix.dronespace import Drone
-from yannickfelix.jsonNetCode import Filesystem
+from tk.yannickfelix.dronespace16 import *
+from tk.yannickfelix.dronespace16.cActionController import *
 
 
 class GameMasterController(object):
@@ -26,16 +26,20 @@ class GameMasterController(object):
         self.globalvars = {
             "res_folder": "../../../res/",
             "running": True,
-            "fullscreen": False,
+            "fullscreen": True,
             "class_gui": None,
             "class_gconsole": None,
-            "class_ginput": None
+            "class_ginput": None,
+            "class_actioncontroller": None,
+            "class_stdcommmands": None
         }
 
         # Init UI and save the references to globalvars
         self.globalvars['class_gui'] = GWindow(self.globalvars)
         self.globalvars['class_gconsole'] = self.globalvars['class_gui'].gameConsole
         self.globalvars['class_ginput'] = self.globalvars['class_gui'].gameInput
+        self.globalvars['class_actioncontroller'] = ActionController(self.globalvars)
+        self.globalvars['class_stdcommands'] = StdCommands(self.globalvars)
 
         # Welcome / Startup messages -> TODO Auslagern
         self.globalvars['class_gconsole'].printMessage("B.E.N.'s Dronecontroller v2.3b", "left")
@@ -74,8 +78,10 @@ class GameMasterController(object):
         self.globalvars['class_gconsole'].writeTick()
         cmd = self.globalvars['class_ginput'].getUserText()
         self.globalvars['class_gconsole'].updateInputting(self.globalvars['class_ginput'].get())
-        self.globalvars['class_gconsole'].printMessage(cmd, "right", "", True, False)
-        self.globalvars['class_gconsole'].printMessage(cmd, "left", "", True, True)
+        if cmd != "" and cmd != " ":
+            self.globalvars['class_gconsole'].printMessage(cmd, "right", "", True, False)
+            if not self.globalvars['class_stdcommands'].handleCommands(cmd.lower()):
+                self.globalvars['class_gconsole'].printMessage("Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
         self.globalvars['class_gui'].update()
         self.globalvars['class_ginput'].focus()
         time.sleep(0.02)
