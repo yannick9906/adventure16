@@ -59,5 +59,21 @@
     "action":"print",
     "args":["left","",true,true],
     "text":"Sure it would."
+  },
+  "Am I Fullscreen?":{
+    "action":"conditionVar",
+    "operation":"equal",
+    "var1":"$fullscreen",
+    "var2":true,
+    "action_true":{
+      "action":"print",
+      "args":["left","",false,true],
+      "text":"Yes, you are"
+    },
+    "action_false":{
+      "action":"print",
+      "args":["left","",false,true],
+      "text":"Nope, but with >fullscreen< you can enter it"
+    }
   }
 }
