@@ -16,7 +16,7 @@ from tk.yannickfelix.cGamecontroller import *
 def close(arg=False):
     globalvars['running'] = False
 
-def toggleFullscreen():
+def toggleFullscreen(arg=False):
     globalvars['fullscreen'] = not globalvars['fullscreen']
 
 globalvars = {"running":True, "fullscreen":False}

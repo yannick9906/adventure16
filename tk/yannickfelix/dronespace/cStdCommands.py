@@ -25,7 +25,7 @@ class StdCommands(object):
             self.commands = Filesystem.loadFile("../../std.json")
         if cmd != '':
             try:
-                cmd = self.commands[cmd]
+                cmd = self.commands[cmd.lower()]
 
                 if cmd['action'] == "close":
                     self.globalvars['running'] = False
