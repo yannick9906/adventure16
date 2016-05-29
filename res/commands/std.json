@@ -44,12 +44,12 @@
     "text":"FileIO Exception: 'bugs' could not be found."
   },
   "enable autoreload":{
-    "action":"varset",
+    "action":"setVar",
     "var":"autoreload",
     "value":true
   },
   "disable autoreload":{
-    "action":"varset",
+    "action":"setVar",
     "var":"autoreload",
     "value":false
   },

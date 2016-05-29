@@ -15,10 +15,25 @@ class StdCommands(object):
     globalvars = None
 
     def __init__(self, globalvars):
+        """
+        This class combines all Standart Commands, which can always be called
+        @param globalvars: The usual globalvars dict
+        @type globalvars: dict
+        """
         self.globalvars = globalvars
         self.cmds = Filesystem.loadFile(globalvars['res_folder'] + "commands/std.json")
 
     def handleCommands(self, cmd):
+        """
+        This method checks if the cmd is a StdCommand and runs the action
+        @param cmd: CMD
+        @type cmd: str
+        @return: Success
+        @rtype: bool
+        """
+        # If autoreload is enabled it reloads the json
+        if self.globalvars['autoreload']:
+            self.cmds = Filesystem.loadFile(self.globalvars['res_folder'] + "commands/std.json")
         cmd = cmd.lower()
         try:
             self.globalvars['class_actioncontroller'].handleAction(self.cmds[cmd]['action'], self.cmds[cmd])

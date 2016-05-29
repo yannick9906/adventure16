@@ -26,6 +26,7 @@ class GameMasterController(object):
         self.globalvars = {
             "res_folder": "../../res/",
             "running": True,
+            "autoreload": False,
             "fullscreen": False,
             "class_gui": None,
             "class_gconsole": None,
@@ -63,9 +64,12 @@ class GameMasterController(object):
         self.globalvars['class_gconsole'].printMessage("Ready.", "left")
         self.globalvars['class_gconsole'].waitAndWrite()
 
+        # The "Main" Gameloop
         while self.globalvars['running']:
             self.update()
             time.sleep(0.02)
+
+        # When the game is stopped
         self.globalvars['class_gui'].destroy()
         self.globalvars['class_gui'].quit()
 
@@ -79,12 +83,35 @@ class GameMasterController(object):
             i += 1"""
 
     def update(self):
-        self.globalvars['class_gconsole'].writeTick()
+        """
+        This method is called by the constructor of this class every 20ms.
+        It ensures that every "update()"-Method is called and makes some other magic
+        """
+        # Get the current command, if there's one
         cmd = self.globalvars['class_ginput'].getUserText()
+        # Update the command display
         self.globalvars['class_gconsole'].updateInputting(self.globalvars['class_ginput'].get())
-        if cmd != "" and cmd != " ":
-            self.globalvars['class_gconsole'].printMessage(cmd, "right", "", True, False)
-            if not self.globalvars['class_stdcommands'].handleCommands(cmd.lower()):
-                self.globalvars['class_gconsole'].printMessage("Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
+        # Handle cmds
+        self.handleCmd(cmd)
+        # Next writing step
+        self.globalvars['class_gconsole'].writeTick()
+        #Update UI
         self.globalvars['class_gui'].update()
         self.globalvars['class_ginput'].focus()
+
+    def handleCmd(self, cmd):
+        """
+        This method is part of the update method, but for better
+        readability it is an extra method.
+        @param cmd: The cmd typed in by the user
+        @type cmd: str
+        """
+        # Some simple checks
+        if cmd != "" and cmd != " ":
+            # Print the cmd onto the screen
+            self.globalvars['class_gconsole'].printMessage(cmd, "right", "", True, False)
+
+            # This actually handles the cmds
+            if not self.globalvars['class_stdcommands'].handleCommands(cmd.lower()):
+                self.globalvars['class_gconsole'].printMessage(
+                    "Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
