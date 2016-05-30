@@ -8,6 +8,21 @@
     "action": "invVar",
     "var": "fullscreen"
   },
+  "hi":{
+    "action":"print",
+    "args":["left","B.E.N.",true,true],
+    "text":"Heyho"
+  },
+  "hey":{
+    "action":"print",
+    "args":["left","B.E.N.",true,true],
+    "text":"Heyho"
+  },
+  "how are you":{
+    "action":"print",
+    "args":["left","B.E.N.",false,true],
+    "text":"Actually, I have no feelings, so can I be healthy or ill?\nBut I can tell you the state of my system:\n\nEnergy: Healthy\nIntegrety: Perfect\nUptime: 2'147'483'647 years, 52 days, 7:23:12.345\n"
+  },
   "anti bug kitteh": {
     "action":"print",
     "args":["left","",false,true],

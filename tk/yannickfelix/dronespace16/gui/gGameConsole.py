@@ -21,7 +21,7 @@ class GGameConsole(tk.Text):
     lastname = ""
     viewX = 36
     isWriting = False
-    writeSpeed = 4
+    writeSpeed = 2
     globalvars = None
 
     # Fontsettings

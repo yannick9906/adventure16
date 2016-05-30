@@ -69,7 +69,11 @@ class GWindow(tk.Tk):
         self.gameConsole.place(x=0, y=0, height=h, width=w)
         self.gameInput.place(x=-30, y=-30, height=0, width=0)
 
-        #Finally update the window with all new components
+        # Add Keylisteners
+        self.gameInput.bind("<Escape>", self.onESC)
+        self.gameInput.bind("<F11>", self.onF11)
+
+        # Finally update the window with all new components
         super().update()
         super().update_idletasks()
 
@@ -98,9 +102,10 @@ class GWindow(tk.Tk):
         """
         w, h = self.winfo_screenwidth(), self.winfo_screenheight()
         if self.isFullscreen:
+            self.isFullscreen = not self.isFullscreen  # Invert the fullscreenstate
             # We're currently in fullscreen, but Windowed is requested
-            # TODO Write something
-
+            self.gameConsole.printMessage("Leaving fullscreen mode...", "left", "Magic Windowmanager", True, True)
+            self.gameConsole.waitAndWrite()
             time.sleep(1) # For the special effect :)
             self.attributes("-fullscreen", 0) # Turn off fullscreen
 
@@ -113,10 +118,12 @@ class GWindow(tk.Tk):
             super().update()
             super().update_idletasks()
 
-            #Todo some nice text
+            self.gameConsole.printMessage("It is so small in here... HELP!", "center")
         else:
             # We're currently windowed, so turn on fullscreen
-            # TODO write something
+            self.isFullscreen = not self.isFullscreen  # Invert the fullscreenstate
+            self.gameConsole.printMessage("Entering fullscreen mode...", "left", "Magic Windowmanager", True, True)
+            self.gameConsole.waitAndWrite()
 
             time.sleep(1) # For the special effect :)
             self.attributes("-fullscreen", 1) # Turn on fullscreen and remove all decorations
@@ -127,6 +134,10 @@ class GWindow(tk.Tk):
             super().update()
             super().update_idletasks()
 
-            # Todo some nice text
+            self.gameConsole.printMessage("Ahh, finally some more pixels around me.", "center")
 
-        self.isFullscreen = not self.isFullscreen # Invert the fullscreenstate
+    def onF11(self, arg=True):
+        self.globalvars['fullscreen'] = not self.globalvars['fullscreen']
+
+    def onESC(self, arg=True):
+        self.globalvars['running'] = False
