@@ -19,11 +19,17 @@ class GWindow(tk.Tk):
     globalvars = None
     isFullscreen = False
     initalsize = ()
+    timesincelastframe = 0
+    lastFrame = 0
+    frameCount = 0
+    frameCountStart = 0
+    lastFrameCount = 0
 
     # UI Components
     mainFrame = None
     gameConsole = None
     gameInput = None
+    upsLabel = None
 
     def __init__(self, globalvars, title="Dronespace", size=(1024, 576)):
         """
@@ -43,7 +49,7 @@ class GWindow(tk.Tk):
         self.isFullscreen = globalvars['fullscreen']
         self.initalsize = size
 
-        #Window initialization
+        # Window initialization
         self.title(title)
         w, h = self.winfo_screenwidth(), self.winfo_screenheight()
 
@@ -61,13 +67,14 @@ class GWindow(tk.Tk):
 
         # Creating UI Components
         self.mainFrame = ttk.Frame(master=self, borderwidth=0)
-        self.gameConsole = GGameConsole(self, globalvars)
-        self.gameInput = GGameInput(self)
-
+        self.gameConsole = GGameConsole(self.mainFrame, globalvars)
+        self.gameInput = GGameInput(self.mainFrame)
+        self.upsLabel = tk.Text(master=self.mainFrame, background="black", font=("ProggySquareTTSZ", 12), fg="red", borderwidth=0)
         # Adding UI Components to window
         self.mainFrame.pack(fill=tk.BOTH, expand=1)
         self.gameConsole.place(x=0, y=0, height=h, width=w)
         self.gameInput.place(x=-30, y=-30, height=0, width=0)
+        self.upsLabel.place(x=2, y=2, height=50, width=150)
 
         # Add Keylisteners
         self.gameInput.bind("<Escape>", self.onESC)
@@ -90,6 +97,26 @@ class GWindow(tk.Tk):
         if self.isFullscreen != self.globalvars['fullscreen']:
             # And changes the fullscreen state
             self.toggleFullscreen()
+
+        # UPS Calculations
+        self.timesincelastframe = time.time() - self.lastFrame
+        self.lastFrame = time.time()
+        self.upsLabel.delete("1.0", tk.END)
+        if self.frameCountStart + 1 <= time.time():
+            self.lastFrameCount = self.frameCount
+            self.frameCount = 0
+            self.frameCountStart = time.time()
+        self.frameCount += 1
+        try:
+            #ups = 1 / self.timesincelastframe
+            #print(ups)
+            ups = 0
+            self.upsLabel.insert(tk.END, "UPS: {:10.2f}U/s\nFrametime: {:.2f}ms\nFPS: {:10.0f}".format(ups, (self.timesincelastframe * 1000), self.lastFrameCount))
+        except ZeroDivisionError:
+            ups = self.lastFrameCount
+
+            self.upsLabel.insert(tk.END, "UPS: {0}U/s\nFrametime: {1}ms".format(ups, (self.timesincelastframe * 1000)))
+
         # Finally update the window, as usual
         super().update_idletasks()
         super().update()

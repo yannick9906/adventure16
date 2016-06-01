@@ -67,7 +67,7 @@ class GameMasterController(object):
         # The "Main" Gameloop
         while self.globalvars['running']:
             self.update()
-            time.sleep(0.02)
+            time.sleep(0)
 
         # When the game is stopped
         self.globalvars['class_gui'].destroy()
