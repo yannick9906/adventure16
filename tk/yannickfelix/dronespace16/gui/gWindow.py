@@ -10,8 +10,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 import tkinter as tk
 import tkinter.ttk as ttk
 import time
-from tk.yannickfelix.dronespace16.gui.gGameConsole import *
-from tk.yannickfelix.dronespace16.gui.gGameInput import *
+from tk.yannickfelix.dronespace16.gui import *
 
 
 class GWindow(tk.Tk):
@@ -43,7 +42,7 @@ class GWindow(tk.Tk):
         @type title: str
         @type size: tuple
         """
-        super().__init__() # Initialize Tkinter
+        super().__init__()  # Initialize Tkinter
         # Filling basic values
         self.globalvars = globalvars
         self.isFullscreen = globalvars['fullscreen']
@@ -74,11 +73,12 @@ class GWindow(tk.Tk):
         self.mainFrame.pack(fill=tk.BOTH, expand=1)
         self.gameConsole.place(x=0, y=0, height=h, width=w)
         self.gameInput.place(x=-30, y=-30, height=0, width=0)
-        self.upsLabel.place(x=2, y=2, height=50, width=150)
+        # self.upsLabel.place(x=2, y=2, height=35, width=150)
 
         # Add Keylisteners
         self.gameInput.bind("<Escape>", self.onESC)
         self.gameInput.bind("<F11>", self.onF11)
+        self.protocol("WM_DELETE_WINDOW", self.onESC)
 
         # Finally update the window with all new components
         super().update()
@@ -100,6 +100,7 @@ class GWindow(tk.Tk):
 
         # UPS Calculations
         self.timesincelastframe = time.time() - self.lastFrame
+        self.globalvars['frametime'] = self.timesincelastframe
         self.lastFrame = time.time()
         self.upsLabel.delete("1.0", tk.END)
         if self.frameCountStart + 1 <= time.time():
@@ -108,9 +109,7 @@ class GWindow(tk.Tk):
             self.frameCountStart = time.time()
         self.frameCount += 1
         try:
-            #ups = 1 / self.timesincelastframe
-            #print(ups)
-            ups = 0
+            ups = 1 / self.timesincelastframe
             self.upsLabel.insert(tk.END, "UPS: {:10.2f}U/s\nFrametime: {:.2f}ms\nFPS: {:10.0f}".format(ups, (self.timesincelastframe * 1000), self.lastFrameCount))
         except ZeroDivisionError:
             ups = self.lastFrameCount

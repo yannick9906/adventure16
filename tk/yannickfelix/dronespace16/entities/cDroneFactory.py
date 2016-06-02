@@ -7,6 +7,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+from tk.yannickfelix.dronespace16.entities.cDroneTransport import *
 
 
 class DroneFactory(object):
@@ -15,4 +16,5 @@ class DroneFactory(object):
         pass
 
     def getDrone(self, dict):
-        pass
+        if dict['name'] == "transport":
+            return DroneTransport()

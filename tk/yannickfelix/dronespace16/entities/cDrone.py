@@ -27,7 +27,7 @@ class Drone(object):
     def __init__(self, globalvars, droneid, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw):
         """
         @param globalvars: The usual globalvars
-        @param droneID: The Identifier of this drone
+        @param droneid: The Identifier of this drone
         @param name: The drones name
         @param maxhealth: The maximum health value in HP
         @param damage: The damage this class does to enemies with one hit
@@ -36,7 +36,7 @@ class Drone(object):
         @param baseweight: The base weight of the drone w/o cargo
 
         @param globalvars: dict
-        @param droneID: int
+        @param droneid: int
         @param name: str
         @param maxhealth: int
         @param damage: float
@@ -55,11 +55,19 @@ class Drone(object):
         self.baseEnergyDraw = baseenergydraw
 
     def resetVars(self):
+        """
+        Resets the field of this class.
+        """
         self.currHealth = self.maxHealth
         self.currEnergyLevel = self.maxEnergy
         self.currCargoSize = self.baseWeight
 
     def takeDamage(self, amount):
+        """
+
+        @param amount: The Amount of Damage
+        @type amount: float
+        """
         self.currHealth -= amount
         if not self.currHealth <= 0:
             self.globalvars['cb_damaged'](self.droneID, amount, self.maxHealth)
@@ -68,10 +76,17 @@ class Drone(object):
             self.takeDeed(amount)
 
     def takeDeed(self, amount):
+        """
+        Will be called when the drone dies
+        @param amount: The Amount of Damage resulted in deed
+        @type amount: float
+        """
         self.globalvars['cb_destroyed'](self.droneID, amount, self.maxHealth)
 
-
     def update(self):
+        """
+        Should be called once per frame. Updates necessary things...
+        """
         self.currEnergyLevel -= self.baseEnergyDraw * (1/self.globalvars['frametime'])
         if self.currEnergyLevel <= 0:
             self.globalvars['cb_noenergy'](self.droneID)
