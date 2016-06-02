@@ -24,10 +24,9 @@ class Drone(object):
     currCargoSize = 0
     currEnergyLevel = 0
 
-    def __init__(self, globalvars, droneid, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw):
+    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw):
         """
         @param globalvars: The usual globalvars
-        @param droneid: The Identifier of this drone
         @param name: The drones name
         @param maxhealth: The maximum health value in HP
         @param damage: The damage this class does to enemies with one hit
@@ -45,7 +44,6 @@ class Drone(object):
         @param baseweight: float
         """
         self.name = name
-        self.droneID = droneid
         self.maxHealth = maxhealth
         self.damage = damage
         self.maxCargosize = maxcargosize

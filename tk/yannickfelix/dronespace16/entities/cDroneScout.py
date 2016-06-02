@@ -10,7 +10,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 from tk.yannickfelix.dronespace16.entities.cDrone import *
 
 
-class DroneTransport(Drone):
+class DroneScout(Drone):
 
     def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw):
         """
@@ -29,3 +29,4 @@ class DroneTransport(Drone):
         @param baseweight: float
         """
         super().__init__(globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw)
+
