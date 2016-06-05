@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 @license
 This work is licensed under the Creative Commons
@@ -12,6 +13,7 @@ import time
 from tk.yannickfelix.dronespace16.gui import *
 from tk.yannickfelix.dronespace16 import *
 from tk.yannickfelix.dronespace16.cActionController import *
+from tk.yannickfelix.dronespace16.cEntitiesController import *
 
 
 class GameMasterController(object):
@@ -41,6 +43,7 @@ class GameMasterController(object):
         self.globalvars['class_ginput'] = self.globalvars['class_gui'].gameInput
         self.globalvars['class_actioncontroller'] = ActionController(self.globalvars)
         self.globalvars['class_stdcommands'] = StdCommands(self.globalvars)
+        self.globalvars['class_entity'] = EntitiesController(self.globalvars)
 
         # Welcome / Startup messages -> TODO Auslagern
         self.globalvars['class_gconsole'].printMessage("B.E.N.'s Dronecontroller v2.3b", "left")
@@ -113,5 +116,6 @@ class GameMasterController(object):
 
             # This actually handles the cmds
             if not self.globalvars['class_stdcommands'].handleCommands(cmd.lower()):
-                self.globalvars['class_gconsole'].printMessage(
-                    "Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
+                if not self.globalvars['class_entity'].handleCommands(cmd.lower()):
+                    self.globalvars['class_gconsole'].printMessage(
+                        "Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")

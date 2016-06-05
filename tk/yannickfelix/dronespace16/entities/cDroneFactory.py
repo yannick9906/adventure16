@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 @license
 This work is licensed under the Creative Commons
@@ -9,15 +10,26 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 from tk.yannickfelix.dronespace16.entities.cDroneTransport import *
 from tk.yannickfelix.dronespace16.entities.cDroneScout import *
+from yannickfelix.jsonNetCode import Filesystem
 
 
 class DroneFactory(object):
     globalvars = {}
+    droneTypes = {}
 
     def __init__(self, globalvars):
         self.globalvars = globalvars
+        self.droneTypes = Filesystem.loadFile(globalvars['res_folder'] + "entities/drones.json")
 
-    def getDrone(self, dict):
+    def getDrone(self, id, dict):
+        if dict['dronetype'] == "transport":
+            drone = self.getNewDrone(self.droneTypes['0'])
+            drone.setCurrEnergyLevel(dict['currEnergyLevel'])
+            drone.setCurrHealth(dict['currHealth'])
+            drone.setID(id)
+            return drone
+
+    def getNewDrone(self, dict):
         if dict['name'] == "transport":
             return DroneTransport(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"])
         elif dict['name'] == "scout":

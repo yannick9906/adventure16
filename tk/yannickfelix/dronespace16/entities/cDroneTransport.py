@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 @license
 This work is licensed under the Creative Commons

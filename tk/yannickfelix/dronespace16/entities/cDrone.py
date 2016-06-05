@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 @license
 This work is licensed under the Creative Commons
@@ -88,3 +89,27 @@ class Drone(object):
         self.currEnergyLevel -= self.baseEnergyDraw * (1/self.globalvars['frametime'])
         if self.currEnergyLevel <= 0:
             self.globalvars['cb_noenergy'](self.droneID)
+
+    def getName(self):
+        return self.name
+
+    def setName(self, name):
+        self.name = name
+
+    def setCurrEnergyLevel(self, energy):
+        self.currEnergyLevel = energy
+
+    def getCurrEnergyLevel(self):
+        return self.currEnergyLevel
+
+    def setCurrHealth(self, health):
+        self.currHealth = health
+
+    def getCurrHealth(self):
+        return self.currHealth
+
+    def setID(self, id):
+        self.droneID = id
+
+    def getID(self):
+        return self.droneID
