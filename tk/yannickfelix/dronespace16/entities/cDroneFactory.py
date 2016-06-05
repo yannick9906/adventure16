@@ -32,6 +32,6 @@ class DroneFactory(object):
 
     def getNewDrone(self, dict):
         if dict['name'] == "transport":
-            return DroneTransport(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"])
+            return DroneTransport(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"], dict["cmds"])
         elif dict['name'] == "scout":
-            return DroneScout(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"])
+            return DroneScout(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"], dict["cmds"])

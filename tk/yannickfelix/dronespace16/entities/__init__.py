@@ -16,6 +16,7 @@ from tk.yannickfelix.dronespace16.entities.cDroneTransport import *
 from tk.yannickfelix.dronespace16.entities.cShip import *
 from tk.yannickfelix.dronespace16.entities.cEntitiesFactory import *
 from tk.yannickfelix.dronespace16.entities.cRoom import *
+from tk.yannickfelix.dronespace16.entities.cDroneActionController import *
 
-__all__ = [Drone, DroneScout, DroneTransport, DroneFactory, Room, EntitiesFactory]
-__all__ = ["Drone", "DroneScout", "DroneTransport", "DroneFactory", "Room", "EntitiesFactory"]
+__all__ = [Drone, DroneScout, DroneTransport, DroneFactory, Room, EntitiesFactory, DroneActionController]
+__all__ = ["Drone", "DroneScout", "DroneTransport", "DroneFactory", "Room", "EntitiesFactory", "DroneActionController"]

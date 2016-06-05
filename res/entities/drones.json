@@ -9,9 +9,7 @@
     "baseenergydraw": 0.01,
     "cmds": {
       "help":{
-        "action":"print",
-        "args":["left","$dronename",true,true],
-        "text":"This is the help Page for this drone."
+        "action":"listcmd"
       },
       "info":{
 

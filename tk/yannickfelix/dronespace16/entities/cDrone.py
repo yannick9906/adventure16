@@ -8,6 +8,8 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+from tk.yannickfelix.dronespace16.entities import *
+from tk.yannickfelix.dronespace16.entities.cDroneActionController import *
 
 
 class Drone(object):
@@ -20,12 +22,16 @@ class Drone(object):
     maxEnergy = 0
     baseWeight = 0
     baseEnergyDraw = 0
+    commands = {}
 
     currHealth = 0
     currCargoSize = 0
     currEnergyLevel = 0
 
-    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw):
+    actionhandler = None
+    dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":""}
+
+    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
         @param globalvars: The usual globalvars
         @param name: The drones name
@@ -34,15 +40,17 @@ class Drone(object):
         @param maxcargosize: The maximum cargo size in Liter
         @param maxenergy: The maxium energy stored in EU
         @param baseweight: The base weight of the drone w/o cargo
+        @param commands: The commands this drone can do
 
-        @param globalvars: dict
-        @param droneid: int
-        @param name: str
-        @param maxhealth: int
-        @param damage: float
-        @param maxcargosize: int
-        @param maxenergy: int
-        @param baseweight: float
+        @type globalvars: dict
+        @type droneid: int
+        @type name: str
+        @type maxhealth: int
+        @type damage: float
+        @type maxcargosize: int
+        @type maxenergy: int
+        @type baseweight: float
+        @type commands: dict
         """
         self.name = name
         self.maxHealth = maxhealth
@@ -52,6 +60,9 @@ class Drone(object):
         self.baseWeight = baseweight
         self.globalvars = globalvars
         self.baseEnergyDraw = baseenergydraw
+        self.commands = commands
+        self.makedronevars()
+        self.actionhandler = DroneActionController(globalvars, self.dronevars)
 
     def resetVars(self):
         """
@@ -60,6 +71,26 @@ class Drone(object):
         self.currHealth = self.maxHealth
         self.currEnergyLevel = self.maxEnergy
         self.currCargoSize = self.baseWeight
+
+    def makedronevars(self):
+        self.dronevars["type"] = "none"
+        self.dronevars["name"] = self.name
+        self.dronevars["maxEnergy"] = self.maxEnergy
+        self.dronevars["maxCargo"] = self.maxCargosize
+        self.dronevars["maxHealth"] = self.maxHealth
+        self.dronevars["currEnergy"] = self.currEnergyLevel
+        self.dronevars["currCargo"] = self.currCargoSize
+        self.dronevars["currHealth"] = self.currHealth
+        self.dronevars["damage"] = self.damage
+        self.dronevars["baseEnergyDraw"] = self.baseEnergyDraw
+        self.dronevars["baseWeight"] = self.baseWeight
+        self.dronevars["class"] = self
+
+    def getCmds(self):
+        list = []
+        for key, value in self.commands.items():
+            list.append(key)
+        return list
 
     def takeDamage(self, amount):
         """
@@ -90,15 +121,20 @@ class Drone(object):
         if self.currEnergyLevel <= 0:
             self.globalvars['cb_noenergy'](self.droneID)
 
+        self.makedronevars()
+
     def getInfo(self):
         return "{0}: {1} ({2} EU; {3}l)".format(self.droneID, self.name, int(self.currEnergyLevel+.5), self.currCargoSize)
 
     def handleCMD(self, cmd: str):
         cmd = cmd.replace("drone ", "")
-        self.globalvars['class_gconsole'].printMessage("Yup, "+cmd, "left", self.name)
-        return True
-
-    def
+        cmd = cmd.lower()
+        print("Command:" + cmd)
+        try:
+            self.actionhandler.handleAction(self.commands[cmd]['action'], self.commands[cmd])
+            return True
+        except KeyError:
+            return False
 
     def getName(self):
         return self.name
