@@ -6,7 +6,17 @@
     "cargosize": 1000,
     "maxenergy": 450,
     "baseweight": 500,
-    "baseenergydraw": 100
+    "baseenergydraw": 0.01,
+    "cmds": {
+      "help":{
+        "action":"print",
+        "args":["left","$dronename",true,true],
+        "text":"This is the help Page for this drone."
+      },
+      "info":{
+
+      }
+    }
   },
   "1":{
     "name": "laserturret",
@@ -15,7 +25,7 @@
     "cargosize": 10,
     "maxenergy": 400,
     "baseweight": 600,
-    "baseenergydraw": 100
+    "baseenergydraw": 0.01
   },
   "2":{
     "name": "missleturret",
@@ -24,7 +34,7 @@
     "cargosize": 50,
     "maxenergy": 300,
     "baseweight": 700,
-    "baseenergydraw": 100
+    "baseenergydraw": 0.01
   },
   "3":{
     "name": "scout",
@@ -33,6 +43,6 @@
     "cargosize": 300,
     "maxenergy": 700,
     "baseweight": 500,
-    "baseenergydraw": 100
+    "baseenergydraw": 0.01
   }
 }

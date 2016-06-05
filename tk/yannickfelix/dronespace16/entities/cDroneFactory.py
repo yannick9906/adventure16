@@ -27,6 +27,7 @@ class DroneFactory(object):
             drone.setCurrEnergyLevel(dict['currEnergyLevel'])
             drone.setCurrHealth(dict['currHealth'])
             drone.setID(id)
+            drone.setName(dict['name'])
             return drone
 
     def getNewDrone(self, dict):

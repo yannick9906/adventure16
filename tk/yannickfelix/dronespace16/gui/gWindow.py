@@ -20,7 +20,7 @@ class GWindow(tk.Tk):
     isFullscreen = False
     initalsize = ()
     timesincelastframe = 0
-    lastFrame = 0
+    lastFrame = time.time()
     frameCount = 0
     frameCountStart = 0
     lastFrameCount = 0
@@ -53,15 +53,15 @@ class GWindow(tk.Tk):
         self.title(title)
         w, h = self.winfo_screenwidth(), self.winfo_screenheight()
 
-        if self.isFullscreen: # If Fullscreen is requested from startup
-            self.attributes("-fullscreen", 1) # Removes all window decorations
-            self.geometry("{0}x{1}-1-1".format(w, h)) # Set the size of the screen as window size
-            super().update_idletasks() # Needed to let the WM make the window
-            self.attributes("-topmost", "yes") # Makes the window above everything else
+        if self.isFullscreen:  # If Fullscreen is requested from startup
+            self.attributes("-fullscreen", 1)  # Removes all window decorations
+            self.geometry("{0}x{1}-1-1".format(w, h))  # Set the size of the screen as window size
+            super().update_idletasks()  # Needed to let the WM make the window
+            self.attributes("-topmost", "yes")  # Makes the window above everything else
         else:
-            startx = int((w * .5) - (size[0] * .5)) # Calculations for centering the window
+            startx = int((w * .5) - (size[0] * .5))  # Calculations for centering the window
             starty = int((h * .5) - (size[1] * .5))
-            self.geometry("{0}x{1}+{2}+{3}".format(size[0], size[1], startx, starty)) # Set the size of the window
+            self.geometry("{0}x{1}+{2}+{3}".format(size[0], size[1], startx, starty))  # Set the size of the window
             super().update_idletasks()
         super().update()
 
@@ -69,7 +69,8 @@ class GWindow(tk.Tk):
         self.mainFrame = ttk.Frame(master=self, borderwidth=0)
         self.gameConsole = GGameConsole(self.mainFrame, globalvars)
         self.gameInput = GGameInput(self.mainFrame)
-        self.upsLabel = tk.Text(master=self.mainFrame, background="black", font=("ProggySquareTTSZ", 12), fg="red", borderwidth=0)
+        self.upsLabel = tk.Text(master=self.mainFrame, background="black", font=("ProggySquareTTSZ", 12), fg="red",
+                                borderwidth=0)
         # Adding UI Components to window
         self.mainFrame.pack(fill=tk.BOTH, expand=1)
         self.gameConsole.place(x=0, y=0, height=h, width=w)
@@ -92,7 +93,7 @@ class GWindow(tk.Tk):
         """
         # Current size of the Mainframe aka innerWindow
         currentHeight = self.mainFrame.winfo_height()
-        currentWidth  = self.mainFrame.winfo_width()
+        currentWidth = self.mainFrame.winfo_width()
         self.gameConsole.place(x=0, y=0, height=currentHeight, width=currentWidth)
         # Checks if the fullscreenvalue in globalvars has changed
         if self.isFullscreen != self.globalvars['fullscreen']:
@@ -111,7 +112,9 @@ class GWindow(tk.Tk):
         self.frameCount += 1
         try:
             ups = 1 / self.timesincelastframe
-            self.upsLabel.insert(tk.END, "UPS: {:10.2f}U/s\nFrametime: {:.2f}ms\nFPS: {:10.0f}".format(ups, (self.timesincelastframe * 1000), self.lastFrameCount))
+            self.globalvars['fps'] = ups
+            self.upsLabel.insert(tk.END, "UPS: {:10.2f}U/s\nFrametime: {:.2f}ms\nFPS: {:10.0f}".format(ups, (
+            self.timesincelastframe * 1000), self.lastFrameCount))
         except ZeroDivisionError:
             ups = self.lastFrameCount
 
@@ -133,14 +136,15 @@ class GWindow(tk.Tk):
             # We're currently in fullscreen, but Windowed is requested
             self.gameConsole.printMessage("Leaving fullscreen mode...", "left", "Magic Windowmanager", True, True)
             self.gameConsole.waitAndWrite()
-            time.sleep(1) # For the special effect :)
-            self.attributes("-fullscreen", 0) # Turn off fullscreen
+            time.sleep(1)  # For the special effect :)
+            self.attributes("-fullscreen", 0)  # Turn off fullscreen
 
             # Set the window into its inital size
             startx = int((w * .5) - (self.initalsize[0] * .5))  # Calculations for centering the window
             starty = int((h * .5) - (self.initalsize[1] * .5))
-            self.geometry("{0}x{1}+{2}+{3}".format(self.initalsize[0], self.initalsize[1], startx, starty)) # Set the size of the window
-            self.state = "normal" # Should turn of Maximize
+            self.geometry("{0}x{1}+{2}+{3}".format(self.initalsize[0], self.initalsize[1], startx,
+                                                   starty))  # Set the size of the window
+            self.state = "normal"  # Should turn of Maximize
             # Once again, update the window
             super().update()
             super().update_idletasks()
@@ -152,11 +156,11 @@ class GWindow(tk.Tk):
             self.gameConsole.printMessage("Entering fullscreen mode...", "left", "Magic Windowmanager", True, True)
             self.gameConsole.waitAndWrite()
 
-            time.sleep(1) # For the special effect :)
-            self.attributes("-fullscreen", 1) # Turn on fullscreen and remove all decorations
-            self.geometry("{0}x{1}-1-1".format(w, h)) # Set the size of the screen as window size
-            super().update_idletasks() # Needed to let the WM update the window
-            self.attributes("-topmost", "yes") # Makes the window above everything else
+            time.sleep(1)  # For the special effect :)
+            self.attributes("-fullscreen", 1)  # Turn on fullscreen and remove all decorations
+            self.geometry("{0}x{1}-1-1".format(w, h))  # Set the size of the screen as window size
+            super().update_idletasks()  # Needed to let the WM update the window
+            self.attributes("-topmost", "yes")  # Makes the window above everything else
             # Once again, update the window
             super().update()
             super().update_idletasks()

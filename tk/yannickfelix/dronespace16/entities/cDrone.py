@@ -86,9 +86,19 @@ class Drone(object):
         """
         Should be called once per frame. Updates necessary things...
         """
-        self.currEnergyLevel -= self.baseEnergyDraw * (1/self.globalvars['frametime'])
+        self.currEnergyLevel -= self.baseEnergyDraw / self.globalvars['fps']
         if self.currEnergyLevel <= 0:
             self.globalvars['cb_noenergy'](self.droneID)
+
+    def getInfo(self):
+        return "{0}: {1} ({2} EU; {3}l)".format(self.droneID, self.name, int(self.currEnergyLevel+.5), self.currCargoSize)
+
+    def handleCMD(self, cmd: str):
+        cmd = cmd.replace("drone ", "")
+        self.globalvars['class_gconsole'].printMessage("Yup, "+cmd, "left", self.name)
+        return True
+
+    def
 
     def getName(self):
         return self.name

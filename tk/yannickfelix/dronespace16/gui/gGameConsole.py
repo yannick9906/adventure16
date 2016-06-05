@@ -46,7 +46,7 @@ class GGameConsole(tk.Text):
         # Create needed tags
         self.tag_configure("BOLD", font=(self.fontFamily, self.fontSize, "bold"))
 
-    def printMessage(self, text, side, name="", autowrap=True, writing=True):
+    def printMessage(self, text, side, name="", autowrap=True, writing=True, newline=True):
         """
         Prepares or prints a message onto the text field
 
@@ -107,7 +107,8 @@ class GGameConsole(tk.Text):
                     lineLength = len(line)
                     self.text += (" " * ((self.viewX - lineLength)//2)) + line + "\n"
 
-            self.text += "\n"  # Add a newline
+            if newline:
+                self.text += "\n"  # Add a newline
 
             if writing:
                 # Set isWriting to true, so writing starts

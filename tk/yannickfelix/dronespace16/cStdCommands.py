@@ -10,6 +10,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 from yannickfelix.jsonNetCode import Filesystem
 
+
 class StdCommands(object):
     cmds = None
     globalvars = None

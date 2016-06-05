@@ -30,6 +30,8 @@ class GameMasterController(object):
             "running": True,
             "autoreload": False,
             "fullscreen": False,
+            "frametime": 1,
+            "fps": 2000,
             "class_gui": None,
             "class_gconsole": None,
             "class_ginput": None,
@@ -90,6 +92,7 @@ class GameMasterController(object):
         This method is called by the constructor of this class every 20ms.
         It ensures that every "update()"-Method is called and makes some other magic
         """
+        self.globalvars['class_entity'].update()
         # Get the current command, if there's one
         cmd = self.globalvars['class_ginput'].getUserText()
         # Update the command display
