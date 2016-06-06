@@ -12,8 +12,20 @@
         "action":"listcmd"
       },
       "info":{
-
+        "action":"listinfo"
+      },
+      "moveto *":{
+        "action":"move",
+        "entity":"$arg1"
+      },
+      "mv *":{
+        "action":"move",
+        "entity":"$arg1"
+      },
+      "cam":{
+        "action":"listentity"
       }
+
     }
   },
   "1":{

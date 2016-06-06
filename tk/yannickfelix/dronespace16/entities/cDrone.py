@@ -126,6 +126,14 @@ class Drone(object):
     def getInfo(self):
         return "{0}: {1} ({2} EU; {3}l)".format(self.droneID, self.name, int(self.currEnergyLevel+.5), self.currCargoSize)
 
+    def detailedInfo(self):
+        return "Name:  #\"{0}\"\n" \
+               "Typ:     None\n" \
+               "Energie: {1:6.1f}/{2:6.1f}EU ({3:.2f}EU/s)\n" \
+               "Cargo:   {4:6.1f}/{5:6.1f}l  ({6:6.1f}kg + {7:6.1f}kg)\n" \
+               "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy, self.baseEnergyDraw, self.currCargoSize, self.maxCargosize, self.baseWeight, 0, self.currHealth, self.maxHealth, self.damage)
+
+
     def handleCMD(self, cmd: str):
         cmd = cmd.replace("drone ", "")
         cmd = cmd.lower()

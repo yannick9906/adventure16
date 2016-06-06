@@ -174,6 +174,7 @@ class GGameConsole(tk.Text):
             # highlight the names
             self.highlight_pattern(self.lastname + ">", "BOLD")
             self.highlight_pattern(">" + self.lastname, "BOLD")
+        self.markdown()
         # Scroll down
         self.see(tk.END)
         # update View Values
@@ -222,6 +223,22 @@ class GGameConsole(tk.Text):
             self.mark_set("matchEnd", "%s+%sc" % (index, count.get()))
             self.tag_add(tag, "matchStart", "matchEnd")
 
+    def deletePattern(self, pattern, start="1.0", end="end", regexp=False):
+        start = self.index(start)
+        end = self.index(end)
+        self.mark_set("matchStart", start)
+        self.mark_set("matchEnd", start)
+        self.mark_set("searchLimit", end)
+
+        count = tk.IntVar()
+        while True:
+            index = self.search(pattern, "matchEnd", "searchLimit", count=count, regexp=regexp)
+            if index == "": break
+            if count.get() == 0: break  # degenerate pattern which matches zero-length strings
+            self.mark_set("matchStart", index)
+            self.mark_set("matchEnd", "%s+%sc" % (index, count.get()))
+            self.delete("matchStart", "matchEnd")
+
     def loadfont(self, fontpath, private=True, enumerable=False):
         """
         Makes fonts located in file `fontpath` available to the font system.
@@ -253,3 +270,7 @@ class GGameConsole(tk.Text):
         flags = (FR_PRIVATE if private else 0) | (FR_NOT_ENUM if not enumerable else 0)
         numFontsAdded = AddFontResourceEx(byref(pathbuf), flags, 0)
         return bool(numFontsAdded)
+
+    def markdown(self):
+        self.highlight_pattern("\".*?\"", "BOLD", regexp=True)
+        # self.deletePattern("**")

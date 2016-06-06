@@ -37,6 +37,8 @@ class DroneActionController(object):
             self.ac_condition_Var(args)
         elif action == "listcmd":
             self.ac_listCMD(args)
+        elif action == "listinfo":
+            self.ac_listInfo(args)
 
     def valueof(self, value):
         """
@@ -125,4 +127,4 @@ class DroneActionController(object):
             self.globalvars['class_gconsole'].printMessage(cmd, "left", newline=False)
 
     def ac_listInfo(self, args):
-        pass
+        self.globalvars['class_gconsole'].printMessage(self.dronevars['class'].detailedInfo(), "left", autowrap=False)
