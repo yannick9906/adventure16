@@ -65,9 +65,9 @@ class GameMasterController(object):
                   )  |  \  `.___________|/
                   `--'   `--'
             """
-        self.globalvars['class_gconsole'].printMessage(text, "left", "", False)
+        """self.globalvars['class_gconsole'].printMessage(text, "left", "", False)
         self.globalvars['class_gconsole'].printMessage("Ready.", "left")
-        self.globalvars['class_gconsole'].waitAndWrite()
+        self.globalvars['class_gconsole'].waitAndWrite()"""
 
         # The "Main" Gameloop
         while self.globalvars['running']:

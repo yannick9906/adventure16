@@ -10,6 +10,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 from tk.yannickfelix.dronespace16.entities import *
 from tk.yannickfelix.dronespace16.entities.cDroneActionController import *
+from tk.yannickfelix.dronespace16.cmds import *
 
 
 class Drone(object):
@@ -60,7 +61,7 @@ class Drone(object):
         self.baseWeight = baseweight
         self.globalvars = globalvars
         self.baseEnergyDraw = baseenergydraw
-        self.commands = commands
+        self.commands = CommandFactory().listOCommands(commands)
         self.makedronevars()
         self.actionhandler = DroneActionController(globalvars, self.dronevars)
 
@@ -88,8 +89,9 @@ class Drone(object):
 
     def getCmds(self):
         list = []
-        for key, value in self.commands.items():
-            list.append(key)
+        for command in self.commands:
+            list.append(command.command)
+        list.sort()
         return list
 
     def takeDamage(self, amount):
@@ -133,16 +135,14 @@ class Drone(object):
                "Cargo:   {4:6.1f}/{5:6.1f}l  ({6:6.1f}kg + {7:6.1f}kg)\n" \
                "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy, self.baseEnergyDraw, self.currCargoSize, self.maxCargosize, self.baseWeight, 0, self.currHealth, self.maxHealth, self.damage)
 
-
     def handleCMD(self, cmd: str):
         cmd = cmd.replace("drone ", "")
-        cmd = cmd.lower()
         print("Command:" + cmd)
-        try:
-            self.actionhandler.handleAction(self.commands[cmd]['action'], self.commands[cmd])
-            return True
-        except KeyError:
-            return False
+        for command in self.commands:
+            if command.isThisCommand(cmd):
+                command.runCommand(self.actionhandler)
+                return True
+        return False
 
     def getName(self):
         return self.name

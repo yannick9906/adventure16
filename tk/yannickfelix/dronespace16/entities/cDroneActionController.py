@@ -39,6 +39,8 @@ class DroneActionController(object):
             self.ac_listCMD(args)
         elif action == "listinfo":
             self.ac_listInfo(args)
+        elif action == "move":
+            self.ac_move(args)
 
     def valueof(self, value):
         """
@@ -128,3 +130,9 @@ class DroneActionController(object):
 
     def ac_listInfo(self, args):
         self.globalvars['class_gconsole'].printMessage(self.dronevars['class'].detailedInfo(), "left", autowrap=False)
+
+    def ac_move(self, args):
+        try:
+            self.globalvars['class_gconsole'].printMessage("Moving to \"" + args["arg1"] + "\"", "left")
+        except KeyError:
+            self.globalvars['class_gconsole'].printMessage("You should at least provide me a destination, since I hasn't been programmed to dance", "left")

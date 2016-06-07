@@ -8,3 +8,9 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+
+from tk.yannickfelix.dronespace16.cmds.cCommand import *
+from tk.yannickfelix.dronespace16.cmds.cCommandFactory import *
+
+__all__ = [Command, CommandFactory]
+__all__ = ["Command","CommandFactory"]

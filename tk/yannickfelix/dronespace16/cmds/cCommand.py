@@ -26,7 +26,7 @@ class Command(object):
         """
         self.action = action
         if command.__contains__("*"):
-            self.command = command.replace("*", "").replace(" ", "")
+            self.command = command.replace("*", "").replace(" ", "").lower()
             self.hasArgs = True
         else:
             self.command = command
@@ -40,7 +40,25 @@ class Command(object):
         @rtype: bool
         """
         if self.hasArgs:
-            cmd = cmd.replace(" ","")
+            args = cmd.split(" ")
+            self.action["arg1"] = args[1] if len(args) > 1 else ''
+            cmd = cmd.replace(" ","").lower()
             return cmd.startswith(self.command)
         else:
             return cmd == self.command or cmd.startswith(self.command)
+
+    def getAction(self):
+        """
+        @deprecated
+        @return: The action
+        @rtype: dict
+        """
+        return self.action
+
+    def runCommand(self, actionhandler):
+        """
+        This method runs the action
+        @param actionhandler: The Actionhandler wich will handle the action
+        @type actionhandler: DroneActionController | ActionController
+        """
+        actionhandler.handleAction(self.action["action"], self.action)
