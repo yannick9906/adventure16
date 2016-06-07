@@ -79,6 +79,9 @@ class GameMasterController(object):
         self.globalvars['class_gui'].quit()
 
     def load(self):
+        """
+        @deprecated
+        """
         pass
         """json = Filesystem.loadFile("../../savegame.json")
         i = 0

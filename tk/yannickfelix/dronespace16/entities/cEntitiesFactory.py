@@ -15,14 +15,38 @@ class EntitiesFactory(object):
     globalvars = {}
 
     def __init__(self, globalvars):
+        """
+        @type globalvars: dict
+        """
         self.globalvars = globalvars
 
     def get(self, ID, dict):
+        """
+        Creates an entity from savegame
+        @param ID: the entity id
+        @param dict: the data
+
+        @type ID: int
+        @type dict: dict
+
+        @return: The Entity
+        @rtype: object
+        """
         type = dict['type']
         if type == "drone":
             return DroneFactory(self.globalvars).getDrone(ID, dict)
 
     def getList(self, dict):
+        """
+        Creates all entities in this list
+        @see get()
+
+        @param dict: The list with the entities data and ids
+        @type dict: dict
+
+        @return: A list with entities
+        @rtype: list
+        """
         list = []
         for key, elem in enumerate(dict):
             list.append(self.get(key, elem))

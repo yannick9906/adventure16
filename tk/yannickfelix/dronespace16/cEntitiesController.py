@@ -19,18 +19,35 @@ class EntitiesController(object):
     selDrone = -1
 
     def __init__(self, globalvars):
+        """
+        @type globalvars: dict
+        """
         self.globalvars = globalvars
         self.load()
 
     def update(self):
+        """
+        This method should be called once per frame, and updates all Entities
+        """
         for e in self.entities:
             e.update()
 
     def load(self):
+        """
+        This loads the json savegame
+        """
         savegame = Filesystem.loadFile("../../savegame.json")
         self.entities = EntitiesFactory(self.globalvars).getList(savegame['entities'])
 
-    def handleCommands(self, cmd: str):
+    def handleCommands(self, cmd):
+        """
+        This handles and forwards entity specific commands
+        @param cmd: The command issued
+        @type cmd: str
+
+        @return: success
+        @rtype: bool
+        """
         if cmd == "drones":
             for e in self.entities:
                 if self.selDrone == e.getID():  drone = e.getInfo() + " <"

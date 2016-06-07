@@ -55,12 +55,14 @@ class GGameConsole(tk.Text):
         @param name: The Name on front of the ">" or "<"
         @param autowrap: False if the text is prewrapped
         @param writing: False if it should be printed directly
+        @param newline: False if no newline should be added
 
         @type text: str
         @type side: str
         @type name: str
         @type autowrap: bool
         @type writing: bool
+        @type newline: bool
         """
         # update View Values
         self.viewX = int(self.master.winfo_width() / 11.1)
@@ -224,6 +226,15 @@ class GGameConsole(tk.Text):
             self.tag_add(tag, "matchStart", "matchEnd")
 
     def deletePattern(self, pattern, start="1.0", end="end", regexp=False):
+        """
+        @see highlight_pattern()
+        The same, but it deletes this part instead of highlighting it
+
+        @type pattern: str
+        @type start: str
+        @type end: str
+        @type regexp: bool
+        """
         start = self.index(start)
         end = self.index(end)
         self.mark_set("matchStart", start)
@@ -272,5 +283,8 @@ class GGameConsole(tk.Text):
         return bool(numFontsAdded)
 
     def markdown(self):
+        """
+        Should do markdown, but ...
+        """
         self.highlight_pattern("\".*?\"", "BOLD", regexp=True)
         # self.deletePattern("**")

@@ -105,11 +105,14 @@ class GWindow(tk.Tk):
         self.globalvars['frametime'] = self.timesincelastframe
         self.lastFrame = time.time()
         self.upsLabel.delete("1.0", tk.END)
+
+        # Some easier method for the ups
         if self.frameCountStart + 1 <= time.time():
             self.lastFrameCount = self.frameCount
             self.frameCount = 0
             self.frameCountStart = time.time()
         self.frameCount += 1
+
         try:
             ups = 1 / self.timesincelastframe
             self.globalvars['fps'] = ups
@@ -168,7 +171,16 @@ class GWindow(tk.Tk):
             self.gameConsole.printMessage("Ahh, finally some more pixels around me.", "center")
 
     def onF11(self, arg=True):
+        """
+        Callback for F11-press -> fullscreentoggle
+        @param arg: Event
+        """
         self.globalvars['fullscreen'] = not self.globalvars['fullscreen']
 
     def onESC(self, arg=True):
+        """
+        Callback for ESC-press or X-click -> stop game
+        @todo confirmation dialog
+        @param arg: Event
+        """
         self.globalvars['running'] = False

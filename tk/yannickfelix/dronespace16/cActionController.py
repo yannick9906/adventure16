@@ -16,6 +16,8 @@ class ActionController(object):
     def __init__(self, globalvars):
         """
         This class handles action
+        @todo make a superclass
+
         @param globalvars: The typical globalvars dict
         @type globalvars: dict
         """
