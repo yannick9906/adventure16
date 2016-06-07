@@ -22,8 +22,8 @@
     },
     {
       "type":"drone",
-      "dronetype":"transport",
-      "name":"Dr0n3z1us",
+      "dronetype":"scout",
+      "name":"IDKwhereIam",
       "currHealth":100,
       "currEnergyLevel":450,
       "inventory": {

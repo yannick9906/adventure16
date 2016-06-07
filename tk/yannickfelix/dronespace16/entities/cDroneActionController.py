@@ -12,9 +12,18 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 class DroneActionController(object):
     globalvars = {}
-    dronevars = None
+    dronevars = {}
 
     def __init__(self, globalvars, dronevars):
+        """
+        @todo Make a superclass for Action Controllers
+
+        @param globalvars: The usual globalvars
+        @param dronevars: A special dronevars
+
+        @type globalvars: dict
+        @type dronevars: dict
+        """
         self.globalvars = globalvars
         self.dronevars = dronevars
 
@@ -121,6 +130,11 @@ class DroneActionController(object):
             self.handleAction(args['action_false']['action'], args['action_false'])
 
     def ac_listCMD(self, args):
+        """
+        This is a special Drone Action.
+        It lists all available commands for this drone.
+        @param args: dict
+        """
         self.globalvars['class_gconsole'].printMessage("Here's what you can do with me:", "left", self.dronevars['class'].name)
         print("listing Cmds")
 
@@ -129,9 +143,20 @@ class DroneActionController(object):
             self.globalvars['class_gconsole'].printMessage(cmd, "left", newline=False)
 
     def ac_listInfo(self, args):
+        """
+        This is a special Drone Action.
+        It prints a detailed information screen of this drone
+        @param args: dict
+        """
         self.globalvars['class_gconsole'].printMessage(self.dronevars['class'].detailedInfo(), "left", autowrap=False)
 
     def ac_move(self, args):
+        """
+        This is a special Drone Action.
+        It will move the drone to a new entity.
+        This one will need one argument to be issued.
+        @param args: dict
+        """
         try:
             self.globalvars['class_gconsole'].printMessage("Moving to \"" + args["arg1"] + "\"", "left")
         except KeyError:

@@ -74,6 +74,9 @@ class Drone(object):
         self.currCargoSize = self.baseWeight
 
     def makedronevars(self):
+        """
+        This method is used to update the dict representaion of this class
+        """
         self.dronevars["type"] = "none"
         self.dronevars["name"] = self.name
         self.dronevars["maxEnergy"] = self.maxEnergy
@@ -88,6 +91,11 @@ class Drone(object):
         self.dronevars["class"] = self
 
     def getCmds(self):
+        """
+        Returns all commands
+        @return: The commands as strings
+        @rtype: str[]
+        """
         list = []
         for command in self.commands:
             list.append(command.command)
@@ -126,9 +134,17 @@ class Drone(object):
         self.makedronevars()
 
     def getInfo(self):
+        """
+        @return: Short info string
+        @rtype: str
+        """
         return "{0}: {1} ({2} EU; {3}l)".format(self.droneID, self.name, int(self.currEnergyLevel+.5), self.currCargoSize)
 
     def detailedInfo(self):
+        """
+        @return: Long info string
+        @rtype: str
+        """
         return "Name:  #\"{0}\"\n" \
                "Typ:     None\n" \
                "Energie: {1:6.1f}/{2:6.1f}EU ({3:.2f}EU/s)\n" \
@@ -136,6 +152,14 @@ class Drone(object):
                "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy, self.baseEnergyDraw, self.currCargoSize, self.maxCargosize, self.baseWeight, 0, self.currHealth, self.maxHealth, self.damage)
 
     def handleCMD(self, cmd: str):
+        """
+        Handles issued commands
+        @param cmd: The Command issued
+        @type cmd: str
+
+        @return: success
+        @rtype: bool
+        """
         cmd = cmd.replace("drone ", "")
         print("Command:" + cmd)
         for command in self.commands:

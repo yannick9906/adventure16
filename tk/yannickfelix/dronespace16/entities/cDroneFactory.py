@@ -29,6 +29,13 @@ class DroneFactory(object):
             drone.setID(id)
             drone.setName(dict['name'])
             return drone
+        elif dict['dronetype'] == "scout":
+            drone = self.getNewDrone(self.droneTypes['3'])
+            drone.setCurrEnergyLevel(dict['currEnergyLevel'])
+            drone.setCurrHealth(dict['currHealth'])
+            drone.setID(id)
+            drone.setName(dict['name'])
+            return drone
 
     def getNewDrone(self, dict):
         if dict['name'] == "transport":

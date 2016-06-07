@@ -33,6 +33,10 @@ class DroneTransport(Drone):
 
 
     def detailedInfo(self):
+        """
+        @return: Long info string
+        @rtype: str
+        """
         return "Name:  \"{0}\"\n" \
                "Typ:     Transport\n" \
                "Energie: {1:6.1f}/{2:6.1f}EU ({3:.2f}EU/s)\n" \
