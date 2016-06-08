@@ -12,7 +12,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import time
 from tk.yannickfelix.dronespace16.gui import *
-
+from tkinter import messagebox
 
 class GWindow(tk.Tk):
     # Basic Values
@@ -180,7 +180,7 @@ class GWindow(tk.Tk):
     def onESC(self, arg=True):
         """
         Callback for ESC-press or X-click -> stop game
-        @todo confirmation dialog
         @param arg: Event
         """
-        self.globalvars['running'] = False
+        if messagebox.askyesno("Close", "Do you really want to quit?"):
+            self.globalvars['running'] = False
