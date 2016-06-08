@@ -12,7 +12,6 @@ import time
 
 from tk.yannickfelix.dronespace16.gui import *
 from tk.yannickfelix.dronespace16 import *
-from tk.yannickfelix.dronespace16.cActionController import *
 from tk.yannickfelix.dronespace16.cEntitiesController import *
 
 

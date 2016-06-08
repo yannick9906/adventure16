@@ -10,8 +10,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 from tk.yannickfelix.dronespace16.cStdCommands import *
 from tk.yannickfelix.dronespace16.gGameMasterController import *
-from tk.yannickfelix.dronespace16.cActionController import *
 from tk.yannickfelix.dronespace16.cEntitiesController import *
 
-__all__ = [StdCommands, GameMasterController, ActionController, EntitiesController]
-__all__ = ['StdCommands', 'GameMasterController', 'ActionController', 'EntitiesController']
+__all__ = [StdCommands, GameMasterController, EntitiesController]
+__all__ = ['StdCommands', 'GameMasterController', 'EntitiesController']

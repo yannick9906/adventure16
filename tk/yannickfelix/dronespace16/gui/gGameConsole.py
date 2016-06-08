@@ -20,17 +20,21 @@ class GGameConsole(tk.Text):
     # Misc values
     text = ""
     lastname = ""
-    viewX = 36
+    viewX = 55
     isWriting = False
     writeSpeed = 3
     globalvars = None
 
     # Fontsettings
-    fontSize = 18
+    fontSize = 24
     # fontFamily = "JoystixMonospace-Regular"
     # fontFile = "font.ttf"
-    fontFamily = "ProggySquareTTSZ"
-    fontFile = "font4.ttf"
+    # fontfactor = 11.1
+    # fontFamily = "ProggySquareTTSZ"
+    # fontFile = "font4.ttf"
+    fontfactor = 9.0
+    fontFamily = "Banana Square"
+    fontFile = "banana.ttf"
 
     def __init__(self, master, globalvars):
         """
@@ -64,8 +68,7 @@ class GGameConsole(tk.Text):
         @type writing: bool
         @type newline: bool
         """
-        # update View Values
-        self.viewX = int(self.master.winfo_width() / 11.1)
+        self.viewX = int(self.master.winfo_width() / self.fontfactor)
 
         if text != "" and text != " ":
             self.removeLastLine()
@@ -180,7 +183,7 @@ class GGameConsole(tk.Text):
         # Scroll down
         self.see(tk.END)
         # update View Values
-        self.viewX = int(self.master.winfo_width() / 11.1)
+        self.viewX = int(self.master.winfo_width() / self.fontfactor)
 
     def waitAndWrite(self):
         """

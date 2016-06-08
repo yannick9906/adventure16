@@ -70,13 +70,12 @@ class GWindow(tk.Tk):
         self.mainFrame = ttk.Frame(master=self, borderwidth=0)
         self.gameConsole = GGameConsole(self.mainFrame, globalvars)
         self.gameInput = GGameInput(self.mainFrame)
-        self.upsLabel = tk.Text(master=self.mainFrame, background="black", font=("ProggySquareTTSZ", 12), fg="red",
-                                borderwidth=0)
+        self.upsLabel = tk.Text(master=self.mainFrame, background="black", font=("Banana Square", 18), fg="red", borderwidth=0)
         # Adding UI Components to window
         self.mainFrame.pack(fill=tk.BOTH, expand=1)
         self.gameConsole.place(x=0, y=0, height=h, width=w)
         self.gameInput.place(x=-30, y=-30, height=0, width=0)
-        self.upsLabel.place(x=2, y=2, height=35, width=150)
+        # self.upsLabel.place(x=2, y=2, height=35, width=150)
 
         # Add Keylisteners
         self.gameInput.bind("<Escape>", self.onESC)
