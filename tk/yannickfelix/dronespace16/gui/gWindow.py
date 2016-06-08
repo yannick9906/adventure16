@@ -14,6 +14,7 @@ import time
 from tk.yannickfelix.dronespace16.gui import *
 from tkinter import messagebox
 
+
 class GWindow(tk.Tk):
     # Basic Values
     globalvars = None
@@ -75,7 +76,7 @@ class GWindow(tk.Tk):
         self.mainFrame.pack(fill=tk.BOTH, expand=1)
         self.gameConsole.place(x=0, y=0, height=h, width=w)
         self.gameInput.place(x=-30, y=-30, height=0, width=0)
-        # self.upsLabel.place(x=2, y=2, height=35, width=150)
+        self.upsLabel.place(x=2, y=2, height=35, width=150)
 
         # Add Keylisteners
         self.gameInput.bind("<Escape>", self.onESC)

@@ -8,12 +8,14 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
-from yannickfelix.jsonNetCode import Filesystem
+from tk.yannickfelix.jsonNetCode import Filesystem
+from tk.yannickfelix.dronespace16.actions import *
 
 
 class StdCommands(object):
     cmds = None
     globalvars = None
+    actionhandler = None
 
     def __init__(self, globalvars):
         """
@@ -23,6 +25,7 @@ class StdCommands(object):
         """
         self.globalvars = globalvars
         self.cmds = Filesystem.loadFile(globalvars['res_folder'] + "commands/std.json")
+        self.actionhandler = ActionHandler(globalvars)
 
     def handleCommands(self, cmd):
         """
@@ -37,7 +40,7 @@ class StdCommands(object):
             self.cmds = Filesystem.loadFile(self.globalvars['res_folder'] + "commands/std.json")
         cmd = cmd.lower()
         try:
-            self.globalvars['class_actioncontroller'].handleAction(self.cmds[cmd]['action'], self.cmds[cmd])
+            self.actionhandler.handleAction(self.cmds[cmd]['action'], self.cmds[cmd])
             return True
         except KeyError:
             return False

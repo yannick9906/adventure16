@@ -9,6 +9,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 @author Yannick Félix
 """
 from . import *
+from .drones import *
 
 
 class EntitiesFactory(object):

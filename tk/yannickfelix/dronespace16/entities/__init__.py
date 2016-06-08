@@ -9,14 +9,9 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 @author Yannick Félix
 """
 
-from tk.yannickfelix.dronespace16.entities.cDrone import *
-from tk.yannickfelix.dronespace16.entities.cDroneScout import *
-from tk.yannickfelix.dronespace16.entities.cDroneFactory import *
-from tk.yannickfelix.dronespace16.entities.cDroneTransport import *
-from tk.yannickfelix.dronespace16.entities.cShip import *
 from tk.yannickfelix.dronespace16.entities.cEntitiesFactory import *
 from tk.yannickfelix.dronespace16.entities.cRoom import *
-from tk.yannickfelix.dronespace16.entities.cDroneActionController import *
+from tk.yannickfelix.dronespace16.entities.cShip import *
 
-__all__ = [Drone, DroneScout, DroneTransport, DroneFactory, Room, EntitiesFactory, DroneActionController]
-__all__ = ["Drone", "DroneScout", "DroneTransport", "DroneFactory", "Room", "EntitiesFactory", "DroneActionController"]
+__all__ = [Room, EntitiesFactory]
+__all__ = ["Room", "EntitiesFactory"]

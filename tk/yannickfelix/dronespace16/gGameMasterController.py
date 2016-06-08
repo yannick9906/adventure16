@@ -35,7 +35,6 @@ class GameMasterController(object):
             "class_gui": None,
             "class_gconsole": None,
             "class_ginput": None,
-            "class_actioncontroller": None,
             "class_stdcommmands": None
         }
 
@@ -43,7 +42,6 @@ class GameMasterController(object):
         self.globalvars['class_gui'] = GWindow(self.globalvars)
         self.globalvars['class_gconsole'] = self.globalvars['class_gui'].gameConsole
         self.globalvars['class_ginput'] = self.globalvars['class_gui'].gameInput
-        self.globalvars['class_actioncontroller'] = ActionController(self.globalvars)
         self.globalvars['class_stdcommands'] = StdCommands(self.globalvars)
         self.globalvars['class_entity'] = EntitiesController(self.globalvars)
 
@@ -104,7 +102,7 @@ class GameMasterController(object):
         self.handleCmd(cmd)
         # Next writing step
         self.globalvars['class_gconsole'].writeTick()
-        #Update UI
+        # Update UI
         self.globalvars['class_gui'].update()
         self.globalvars['class_ginput'].focus()
 

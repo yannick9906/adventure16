@@ -9,6 +9,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 @author Yannick Félix
 """
 from yannickfelix.jsonNetCode import Filesystem
+from yannickfelix.dronespace16.entities.drones import *
 from yannickfelix.dronespace16.entities import *
 
 
@@ -57,13 +58,17 @@ class EntitiesController(object):
             return True
         elif cmd.startswith("drone sel"):
             cmd = cmd.split(" ")
-            if int(cmd[2]) <= len(self.entities):
-                if isinstance(self.entities[int(cmd[2])], Drone):
-                    self.selDrone = int(cmd[2])
-                    self.globalvars['class_gconsole'].printMessage("Current drone change to <{0}: {1}>".format(self.selDrone, self.entities[self.selDrone].getName()), "left")
-                    return True
-            self.globalvars['class_gconsole'].printMessage("This drone does not exist (yet).", "left")
-            return True
+            try:
+                if int(cmd[2]) <= len(self.entities):
+                    if isinstance(self.entities[int(cmd[2])], Drone):
+                        self.selDrone = int(cmd[2])
+                        self.globalvars['class_gconsole'].printMessage("Current drone change to <{0}: {1}>".format(self.selDrone, self.entities[self.selDrone].getName()), "left")
+                    else: self.globalvars['class_gconsole'].printMessage("This drone does not exist (yet).", "left")
+                else: self.globalvars['class_gconsole'].printMessage("This drone does not exist (yet).", "left")
+            except IndexError:
+                self.globalvars['class_gconsole'].printMessage("Please provide a DroneID", "left")
+            finally:
+                return True
         elif cmd.startswith("drone "):
             if self.selDrone != -1:
                 drone = self.entities[self.selDrone]
