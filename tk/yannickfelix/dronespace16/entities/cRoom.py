@@ -8,18 +8,27 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+from yannickfelix.dronespace16.entities.cEntity import Entity
 
 
-class Room(object):
-    id = 0
-    doors = []
-    tileEntities = []
-    globalvars = {}
+class Room(Entity):
+    entities = []
 
-    def __init__(self, globalvars, id, doors, tileEntities):
-        self.id = id
-        self.globalvars = globalvars
-    # TODO Entities and doors
+    def __init__(self, id, name, commands, globalvars, entities):
+        super().__init__(name, id, commands, globalvars)
+        self.entities = entities
 
-    def fromDict(self, globalvars, dict):
-        return Room(globalvars, dict['id'], dict['doors'], dict['tileEntities'])
+    @staticmethod
+    def fromDict(globalvars, dict):
+        return Room(dict['id'], dict["name"], dict["commands"], globalvars, dict['entities'])
+
+    def finishLoad(self):
+        temp = []
+        for key in self.entities:
+            temp.append(self.globalvars["all_entities"][str(key)])
+        self.entities = temp
+
+    def getEntities(self):
+        list = []
+        for entity in self.entities:
+            list.append("{0:3.0f}:> {1}".format(entity.id, entity.name))

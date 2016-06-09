@@ -28,9 +28,11 @@ class Drone(object):
     currHealth = 0
     currCargoSize = 0
     currEnergyLevel = 0
+    currRoom = []
+    currEntity = []
 
     actionhandler = None
-    dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":""}
+    dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":"", "currRoomID":"", "currEntityID":""}
 
     def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
@@ -89,6 +91,8 @@ class Drone(object):
         self.dronevars["baseEnergyDraw"] = self.baseEnergyDraw
         self.dronevars["baseWeight"] = self.baseWeight
         self.dronevars["class"] = self
+        self.dronevars["currRoomID"] = self.currRoom
+        self.dronevars["currEntityID"] = self.currEntity
 
     def getCmds(self):
         """
@@ -108,12 +112,13 @@ class Drone(object):
         @param amount: The Amount of Damage
         @type amount: float
         """
+        old = self.currHealth
         self.currHealth -= amount
         if not self.currHealth <= 0:
-            self.globalvars['cb_damaged'](self.droneID, amount, self.maxHealth)
+            self.globalvars['cb_damaged'](self, amount, self.maxHealth)
         else:
             self.currHealth = 0
-            self.takeDeed(amount)
+            if old > 0: self.takeDeed(amount)
 
     def takeDeed(self, amount):
         """
@@ -121,15 +126,16 @@ class Drone(object):
         @param amount: The Amount of Damage resulted in deed
         @type amount: float
         """
-        self.globalvars['cb_destroyed'](self.droneID, amount, self.maxHealth)
+        self.globalvars['cb_destroyed'](self, amount, self.maxHealth)
 
     def update(self):
         """
         Should be called once per frame. Updates necessary things...
         """
+        old = self.currEnergyLevel
         self.currEnergyLevel -= self.baseEnergyDraw / self.globalvars['fps']
         if self.currEnergyLevel <= 0:
-            self.globalvars['cb_noenergy'](self.droneID)
+            if old > 0: self.globalvars['cb_noenergy'](self)
 
         self.makedronevars()
 

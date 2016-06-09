@@ -34,7 +34,10 @@ class GameMasterController(object):
             "class_gui": None,
             "class_gconsole": None,
             "class_ginput": None,
-            "class_stdcommmands": None
+            "class_stdcommmands": None,
+            "cb_destroyed": None,
+            "cb_damaged": None,
+            "cb_noenergy": None
         }
 
         # Init UI and save the references to globalvars
@@ -43,6 +46,11 @@ class GameMasterController(object):
         self.globalvars['class_ginput'] = self.globalvars['class_gui'].gameInput
         self.globalvars['class_stdcommands'] = StdCommands(self.globalvars)
         self.globalvars['class_entity'] = EntitiesController(self.globalvars)
+
+        # Callbacks
+        self.globalvars['cb_destroyed'] = self.cb_droneDestroyed
+        self.globalvars['cb_damaged'] = self.cb_droneDamaged
+        self.globalvars['cb_noenergy'] = self.cb_droneNoEnergy
 
         # Welcome / Startup messages -> TODO Auslagern
         self.globalvars['class_gconsole'].printMessage("B.E.N.'s Dronecontroller v2.3b", "left")
@@ -122,3 +130,12 @@ class GameMasterController(object):
                 if not self.globalvars['class_entity'].handleCommands(cmd.lower()):
                     self.globalvars['class_gconsole'].printMessage(
                         "Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
+
+    def cb_droneDestroyed(self, drone, amount):
+        self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has been destroyed(-{2}HP)**".format(drone.droneID, drone.name, amount), "center", newline=False, markup=True)
+
+    def cb_droneDamaged(self, drone, amount):
+        self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has been damaged(-{2}HP)**".format(drone.droneID, drone.name, amount), "center", newline=False, markup=True)
+
+    def cb_droneNoEnergy(self, drone):
+        self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has run out of energy. That's sad.**".format(drone.droneID, drone.name), "center", newline=False, markup=True)
