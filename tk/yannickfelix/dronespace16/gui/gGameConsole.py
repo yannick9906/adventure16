@@ -177,6 +177,9 @@ class GGameConsole(tk.Text):
             if self.text != "" and self.isWriting == True:
                 # Get the last char (or 4 or something else)
                 char = self.text[:1]
+
+                # And applying these in regard to the used tag
+                # (if there's any)
                 if self.lastTag != "":
                     self.insert(tk.END, char.replace("**", "").replace("__", ""), self.lastTag)
                 else:
@@ -184,9 +187,13 @@ class GGameConsole(tk.Text):
 
                 # Making markup
                 if self.markup:
-                    self.deletePattern("__")
-                    self.deletePattern("**")
-                    self.updateTag(1, self.text)
+                    # This deletes the markup strings from the output
+                    # Only lastline is used so I don't mess up ASCII-Art
+                    # previously printed
+                    self.deletePattern("__", start="lastline")
+                    self.deletePattern("**", start="lastline")
+                    # And calling the magic Markupmethod :)
+                    self.updateTag(self.text)
 
                 # Remove this char from the text
                 self.previousChar = self.text[:1]
@@ -199,7 +206,6 @@ class GGameConsole(tk.Text):
                 self.highlight_pattern(self.lastname + ">", "BOLD")
                 self.highlight_pattern(">" + self.lastname, "BOLD")
                 self.markup = False
-            self.markdown()
             # Scroll down
             self.see(tk.END)
             # update View Values
@@ -305,41 +311,27 @@ class GGameConsole(tk.Text):
         numFontsAdded = AddFontResourceEx(byref(pathbuf), flags, 0)
         return bool(numFontsAdded)
 
-    def markdown(self):
+    def updateTag(self, chars):
         """
-        Should do markdown, but ...
-        """
-        # self.highlight_pattern("\".*?\"", "BOLD", regexp=True)
-        # self.deletePattern("**")
+        This method will check for markup and update the tag used for writing the next char
+        @todo make italic and bold at once possible
 
-    def updateTag(self, writeSpeed, chars):
-        """
-
-        @param writeSpeed:
-        @param chars:
-
-        @type writeSpeed: int
+        @param chars: The chars...
         @type chars: str
         """
-        if writeSpeed >= 2:
-            if chars.__contains__("**"):
-                if self.lastTag == "BOLD":
-                    self.lastTag = ""
-                else:
-                    self.lastTag = "BOLD"
-            elif chars.__contains__("__"):
-                if self.lastTag == "ITALIC":
-                    self.lastTag = ""
-                else:
-                    self.lastTag = "ITALIC"
-        else:
-            if chars[0] == "*" and self.previousChar == "*":
-                if self.lastTag == "BOLD":
-                    self.lastTag = ""
-                else:
-                    self.lastTag = "BOLD"
-            elif chars[0] == "_" and self.previousChar == "_":
-                if self.lastTag == "ITALIC":
-                    self.lastTag = ""
-                else:
-                    self.lastTag = "ITALIC"
+        # ** == Bold text -> If this and the last char equals a * it will
+        if chars[0] == "*" and self.previousChar == "*":
+            # either disable
+            if self.lastTag == "BOLD":
+                self.lastTag = ""
+            # or enable Bold text
+            else:
+                self.lastTag = "BOLD"
+        # __ == Italic text -> If this and the last char equals a _ it will
+        elif chars[0] == "_" and self.previousChar == "_":
+            # either disable
+            if self.lastTag == "ITALIC":
+                self.lastTag = ""
+            # or enable italic text
+            else:
+                self.lastTag = "ITALIC"
