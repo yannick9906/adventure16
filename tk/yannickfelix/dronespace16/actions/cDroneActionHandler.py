@@ -77,7 +77,7 @@ class DroneActionHandler(ActionHandler):
         It prints a detailed information screen of this drone
         @param args: dict
         """
-        self.globalvars['class_gconsole'].printMessage(self.dronevars['class'].detailedInfo(), "left", autowrap=False)
+        self.globalvars['class_gconsole'].printMessage(self.dronevars['class'].detailedInfo(), "left", autowrap=False, markup=True)
 
     def ac_move(self, args):
         """

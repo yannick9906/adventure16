@@ -24,6 +24,9 @@ class GGameConsole(tk.Text):
     isWriting = False
     writeSpeed = 3
     globalvars = None
+    lastTag = ""
+    previousChar = ""
+    markup = False
 
     # Fontsettings
     fontSize = 24
@@ -49,8 +52,9 @@ class GGameConsole(tk.Text):
 
         # Create needed tags
         self.tag_configure("BOLD", font=(self.fontFamily, self.fontSize, "bold"))
+        self.tag_configure("ITALIC", font=(self.fontFamily, self.fontSize, "italic"))
 
-    def printMessage(self, text, side, name="", autowrap=True, writing=True, newline=True):
+    def printMessage(self, text, side, name="", autowrap=True, writing=True, newline=True, markup=False):
         """
         Prepares or prints a message onto the text field
 
@@ -60,6 +64,7 @@ class GGameConsole(tk.Text):
         @param autowrap: False if the text is prewrapped
         @param writing: False if it should be printed directly
         @param newline: False if no newline should be added
+        @param markup: True if markup should be applied(not campatible with writing=False)
 
         @type text: str
         @type side: str
@@ -67,7 +72,9 @@ class GGameConsole(tk.Text):
         @type autowrap: bool
         @type writing: bool
         @type newline: bool
+        @type markup: bool
         """
+        self.markup = markup
         self.viewX = int(self.master.winfo_width() / self.fontfactor)
 
         if text != "" and text != " ":
@@ -166,24 +173,37 @@ class GGameConsole(tk.Text):
         It writes the next char into the text field
         and updates necessary field of this class.
         """
-        if self.text != "" and self.isWriting == True:
-            # Get the last char (or 4 or something else)
-            char = self.text[:self.writeSpeed]
-            self.insert(tk.END, char)
-            # Remove this char from the text
-            self.text = self.text[self.writeSpeed:]
-        elif self.text == "" and self.isWriting == True:
-            # Wrinting is finished
-            # Turn of writing
-            self.isWriting = False
-            # highlight the names
-            self.highlight_pattern(self.lastname + ">", "BOLD")
-            self.highlight_pattern(">" + self.lastname, "BOLD")
-        self.markdown()
-        # Scroll down
-        self.see(tk.END)
-        # update View Values
-        self.viewX = int(self.master.winfo_width() / self.fontfactor)
+        for i in range(self.writeSpeed):
+            if self.text != "" and self.isWriting == True:
+                # Get the last char (or 4 or something else)
+                char = self.text[:1]
+                if self.lastTag != "":
+                    self.insert(tk.END, char.replace("**", "").replace("__", ""), self.lastTag)
+                else:
+                    self.insert(tk.END, char.replace("**", "").replace("__", ""))
+
+                # Making markup
+                if self.markup:
+                    self.deletePattern("__")
+                    self.deletePattern("**")
+                    self.updateTag(1, self.text)
+
+                # Remove this char from the text
+                self.previousChar = self.text[:1]
+                self.text = self.text[1:]
+            elif self.text == "" and self.isWriting == True:
+                # Wrinting is finished
+                # Turn of writing
+                self.isWriting = False
+                # highlight the names
+                self.highlight_pattern(self.lastname + ">", "BOLD")
+                self.highlight_pattern(">" + self.lastname, "BOLD")
+                self.markup = False
+            self.markdown()
+            # Scroll down
+            self.see(tk.END)
+            # update View Values
+            self.viewX = int(self.master.winfo_width() / self.fontfactor)
 
     def waitAndWrite(self):
         """
@@ -289,5 +309,37 @@ class GGameConsole(tk.Text):
         """
         Should do markdown, but ...
         """
-        self.highlight_pattern("\".*?\"", "BOLD", regexp=True)
+        # self.highlight_pattern("\".*?\"", "BOLD", regexp=True)
         # self.deletePattern("**")
+
+    def updateTag(self, writeSpeed, chars):
+        """
+
+        @param writeSpeed:
+        @param chars:
+
+        @type writeSpeed: int
+        @type chars: str
+        """
+        if writeSpeed >= 2:
+            if chars.__contains__("**"):
+                if self.lastTag == "BOLD":
+                    self.lastTag = ""
+                else:
+                    self.lastTag = "BOLD"
+            elif chars.__contains__("__"):
+                if self.lastTag == "ITALIC":
+                    self.lastTag = ""
+                else:
+                    self.lastTag = "ITALIC"
+        else:
+            if chars[0] == "*" and self.previousChar == "*":
+                if self.lastTag == "BOLD":
+                    self.lastTag = ""
+                else:
+                    self.lastTag = "BOLD"
+            elif chars[0] == "_" and self.previousChar == "_":
+                if self.lastTag == "ITALIC":
+                    self.lastTag = ""
+                else:
+                    self.lastTag = "ITALIC"

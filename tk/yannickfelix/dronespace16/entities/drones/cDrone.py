@@ -145,7 +145,7 @@ class Drone(object):
         @return: Long info string
         @rtype: str
         """
-        return "Name:  #\"{0}\"\n" \
+        return "Name:  **{0}**\n" \
                "Typ:     None\n" \
                "Energie: {1:6.1f}/{2:6.1f}EU ({3:.2f}EU/s)\n" \
                "Cargo:   {4:6.1f}/{5:6.1f}l  ({6:6.1f}kg + {7:6.1f}kg)\n" \
