@@ -10,6 +10,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 from . import *
 from .drones import *
+from .cRoom import *
 
 
 class EntitiesFactory(object):
@@ -36,6 +37,10 @@ class EntitiesFactory(object):
         type = dict['type']
         if type == "drone":
             return DroneFactory(self.globalvars).getDrone(ID, dict)
+        elif type == "room":
+            return Room.fromDict(self.globalvars, ID, dict)
+        elif type == "ship":
+            pass
 
     def getList(self, dict):
         """

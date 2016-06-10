@@ -8,7 +8,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
-from yannickfelix.dronespace16.cmds import CommandFactory
+from tk.yannickfelix.dronespace16.cmds import CommandFactory
 
 
 class Entity(object):
@@ -16,6 +16,7 @@ class Entity(object):
     id = 0
     commands = {}
     globalvars = {}
+    parent = None
 
     def __init__(self, name, id, commands, globalvars):
         """
@@ -35,4 +36,8 @@ class Entity(object):
         self.globalvars = globalvars
         self.commands = CommandFactory().listOCommands(commands)
 
-    # TODO make methods O.o
+    def setParent(self, parent):
+        self.parent = parent
+
+    def update(self):
+        pass

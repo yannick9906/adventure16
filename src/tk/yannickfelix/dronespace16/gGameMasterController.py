@@ -14,6 +14,7 @@ import time
 from tk.yannickfelix.dronespace16.gui import *
 from tk.yannickfelix.dronespace16 import *
 from tk.yannickfelix.dronespace16.cEntitiesController import *
+from tk.yannickfelix.dronespace16.cStdCommands import *
 
 
 class GameMasterController(object):
@@ -26,7 +27,7 @@ class GameMasterController(object):
         """
         # Init globalvars
         self.globalvars = {
-            "res_folder": "../../res/",
+            "res_folder": "../../../res/",
             "running": True,
             "autoreload": False,
             "fullscreen": False,

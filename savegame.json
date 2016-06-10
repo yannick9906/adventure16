@@ -29,6 +29,20 @@
       "inventory": {
 
       }
+    },
+    {
+      "type":"room",
+      "name":"Controlroom",
+      "commands":{},
+      "entities":[
+        4
+      ]
+    },
+    {
+      "type":"infotab",
+      "name":"CEO Seat",
+      "information": "stage1-01",
+      "cleared": 1
     }
   ]
 }

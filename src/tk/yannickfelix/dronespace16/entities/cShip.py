@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 @license
 This work is licensed under the Creative Commons
@@ -7,9 +8,4 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
-
-
-class Ship(object):
-
-    def __init__(self):
-        pass
+from . import *

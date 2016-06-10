@@ -31,13 +31,14 @@ class EntitiesController(object):
         This method should be called once per frame, and updates all Entities
         """
         for e in self.entities:
-            e.update()
+            if e is not None:
+                e.update()
 
     def load(self):
         """
         This loads the json savegame
         """
-        savegame = Filesystem.loadFile("../../savegame.json")
+        savegame = Filesystem.loadFile("../../../savegame.json")
         self.entities = EntitiesFactory(self.globalvars).getList(savegame['entities'])
 
     def handleCommands(self, cmd):
@@ -51,9 +52,10 @@ class EntitiesController(object):
         """
         if cmd == "drones":
             for e in self.entities:
-                if self.selDrone == e.getID():  drone = e.getInfo() + " <"
-                else: drone = e.getInfo()
-                self.globalvars['class_gconsole'].printMessage(drone, "left",newline=False)
+                if isinstance(e, Drone):
+                    if self.selDrone == e.getID():  drone = e.getInfo() + " <"
+                    else: drone = e.getInfo()
+                    self.globalvars['class_gconsole'].printMessage(drone, "left",newline=False)
             self.globalvars['class_gconsole'].printMessage("Type in 'drone sel <droneid>' to select a drone","left",newline=False)
             return True
         elif cmd.startswith("drone sel"):

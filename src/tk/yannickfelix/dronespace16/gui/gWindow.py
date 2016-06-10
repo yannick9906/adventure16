@@ -11,7 +11,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 import tkinter as tk
 import tkinter.ttk as ttk
 import time
-from tk.yannickfelix.dronespace16.gui import *
+from . import *
 from tkinter import messagebox
 
 

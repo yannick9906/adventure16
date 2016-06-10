@@ -8,7 +8,8 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
-from tk.yannickfelix.dronespace16.entities.cEntity import Entity
+from tk.yannickfelix.dronespace16.entities import *
+from tk.yannickfelix.dronespace16.entities.cEntity import *
 
 
 class Room(Entity):
@@ -19,8 +20,8 @@ class Room(Entity):
         self.entities = entities
 
     @staticmethod
-    def fromDict(globalvars, dict):
-        return Room(dict['id'], dict["name"], dict["commands"], globalvars, dict['entities'])
+    def fromDict(globalvars, id, dict):
+        return Room(id, dict["name"], dict["commands"], globalvars, dict['entities'])
 
     def finishLoad(self):
         temp = []

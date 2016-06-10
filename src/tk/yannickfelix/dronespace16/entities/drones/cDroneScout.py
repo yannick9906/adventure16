@@ -11,9 +11,9 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 from tk.yannickfelix.dronespace16.entities.drones.cDrone import *
 
 
-class DroneTransport(Drone):
+class DroneScout(Drone):
 
-    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
+    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands, currRoom, currEntity):
         """
         @param name: The drones name
         @param maxhealth: The maximum health value in HP
@@ -29,7 +29,7 @@ class DroneTransport(Drone):
         @param maxenergy: int
         @param baseweight: float
         """
-        super().__init__(globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands)
+        super().__init__(globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands, currRoom, currEntity)
 
 
     def detailedInfo(self):
@@ -37,8 +37,8 @@ class DroneTransport(Drone):
         @return: Long info string
         @rtype: str
         """
-        return "Name:  \"{0}\"\n" \
-               "Typ:     Transport\n" \
+        return "Name:  **{0}**\n" \
+               "Typ:     __Scout__\n" \
                "Energie: {1:6.1f}/{2:6.1f}EU ({3:.2f}EU/s)\n" \
                "Cargo:   {4:6.1f}/{5:6.1f}l  ({6:6.1f}kg + {7:6.1f}kg)\n" \
                "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy,

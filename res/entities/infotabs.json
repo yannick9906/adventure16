@@ -1,0 +1,9 @@
+{
+  "stage1-01":{
+    "stages":[
+      "Welcome to dronespace. This is where your story begins.\nSince you have managed to come here, you should be familiar with the controls.\n",
+      "** If you have managed to come here...\nYou're awesome!**"
+    ],
+    "startundiscoverd":1
+  }
+}

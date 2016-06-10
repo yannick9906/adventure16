@@ -8,9 +8,9 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 @author Yannick Félix
 """
 
+from tk.yannickfelix.dronespace16.cEntitiesController import *
+from tk.yannickfelix.dronespace16.gGameMasterController import *
 from tk.yannickfelix.dronespace16.cStdCommands import *
-from yannickfelix.dronespace16.gGameMasterController import *
-from yannickfelix.dronespace16.cEntitiesController import *
 
 __all__ = [StdCommands, GameMasterController, EntitiesController]
 __all__ = ['StdCommands', 'GameMasterController', 'EntitiesController']

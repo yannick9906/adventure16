@@ -28,13 +28,13 @@ class Drone(object):
     currHealth = 0
     currCargoSize = 0
     currEnergyLevel = 0
-    currRoom = []
-    currEntity = []
+    currRoom = None
+    currEntity = None
 
     actionhandler = None
     dronevars = {}
 
-    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
+    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands, currRoom, currEntity):
         """
         @param globalvars: The usual globalvars
         @param name: The drones name
@@ -67,6 +67,8 @@ class Drone(object):
         self.dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":"", "currRoomID":"", "currEntityID":""}
         self.makedronevars()
         self.actionhandler = DroneActionHandler(globalvars, self.dronevars)
+        self.currEntity = currEntity
+        self.currRoom = currRoom
 
     def resetVars(self):
         """
