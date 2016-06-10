@@ -13,7 +13,7 @@ from tk.yannickfelix.dronespace16.entities.drones.cDrone import *
 
 class DroneScout(Drone):
 
-    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands, currRoom, currEntity):
+    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
         @param name: The drones name
         @param maxhealth: The maximum health value in HP
@@ -29,7 +29,7 @@ class DroneScout(Drone):
         @param maxenergy: int
         @param baseweight: float
         """
-        super().__init__(globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands, currRoom, currEntity)
+        super().__init__(globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands)
 
 
     def detailedInfo(self):

@@ -39,7 +39,9 @@ class CommandFactory(object):
         @return: A list of Command instances
         @rtype: Command[]
         """
-        list = []
-        for key, value in dict.items():
-            list.append(self.getCommand(key, value))
-        return list
+        if dict.__len__() != 0:
+            list = []
+            for key, value in dict.items():
+                list.append(self.getCommand(key, value))
+            return list
+        else: return []

@@ -34,7 +34,7 @@ class Drone(object):
     actionhandler = None
     dronevars = {}
 
-    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands, currRoom, currEntity):
+    def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
         @param globalvars: The usual globalvars
         @param name: The drones name
@@ -64,11 +64,9 @@ class Drone(object):
         self.globalvars = globalvars
         self.baseEnergyDraw = baseenergydraw
         self.commands = CommandFactory().listOCommands(commands)
-        self.dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":"", "currRoomID":"", "currEntityID":""}
+        self.dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":""}
         self.makedronevars()
         self.actionhandler = DroneActionHandler(globalvars, self.dronevars)
-        self.currEntity = currEntity
-        self.currRoom = currRoom
 
     def resetVars(self):
         """
@@ -94,8 +92,6 @@ class Drone(object):
         self.dronevars["baseEnergyDraw"] = self.baseEnergyDraw
         self.dronevars["baseWeight"] = self.baseWeight
         self.dronevars["class"] = self
-        self.dronevars["currRoomID"] = self.currRoom
-        self.dronevars["currEntityID"] = self.currEntity
 
     def getCmds(self):
         """
@@ -131,6 +127,9 @@ class Drone(object):
         """
         self.globalvars['cb_destroyed'](self, amount, self.maxHealth)
 
+    def move(self, distance):
+        self.currEnergyLevel -= distance * .01 * (self.baseWeight + self.currCargoSize * 10)
+
     def update(self):
         """
         Should be called once per frame. Updates necessary things...
@@ -141,6 +140,11 @@ class Drone(object):
             if old > 0: self.globalvars['cb_noenergy'](self)
 
         self.makedronevars()
+
+        if isinstance(self.currRoom, int):
+            self.currRoom = self.globalvars['class_entity'].get(self.currRoom)
+        if isinstance(self.currEntity, int):
+            self.currEntity = self.currRoom.getEntity(self.currEntity)
 
     def getInfo(self):
         """
@@ -160,7 +164,7 @@ class Drone(object):
                "Cargo:   {4:6.1f}/{5:6.1f}l  ({6:6.1f}kg + {7:6.1f}kg)\n" \
                "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy, self.baseEnergyDraw, self.currCargoSize, self.maxCargosize, self.baseWeight, 0, self.currHealth, self.maxHealth, self.damage)
 
-    def handleCMD(self, cmd: str):
+    def handleCMD(self, cmd):
         """
         Handles issued commands
         @param cmd: The Command issued
@@ -200,3 +204,9 @@ class Drone(object):
 
     def getID(self):
         return self.droneID
+
+    def setCurrRoom(self, room):
+        self.currRoom = room
+
+    def setCurrEntity(self, entity):
+        self.currEntity = entity

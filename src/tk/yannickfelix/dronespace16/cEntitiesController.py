@@ -41,6 +41,12 @@ class EntitiesController(object):
         savegame = Filesystem.loadFile("../../../savegame.json")
         self.entities = EntitiesFactory(self.globalvars).getList(savegame['entities'])
 
+    def get(self, id):
+        try:
+            return self.entities[id]
+        except IndexError:
+            return None
+
     def handleCommands(self, cmd):
         """
         This handles and forwards entity specific commands
@@ -56,7 +62,7 @@ class EntitiesController(object):
                     if self.selDrone == e.getID():  drone = e.getInfo() + " <"
                     else: drone = e.getInfo()
                     self.globalvars['class_gconsole'].printMessage(drone, "left",newline=False)
-            self.globalvars['class_gconsole'].printMessage("Type in 'drone sel <droneid>' to select a drone","left",newline=False)
+            self.globalvars['class_gconsole'].printMessage("Type in \"__drone sel <droneid>__\" to select a drone","left",newline=False, markup=True)
             return True
         elif cmd.startswith("drone sel"):
             cmd = cmd.split(" ")
@@ -75,6 +81,14 @@ class EntitiesController(object):
             if self.selDrone != -1:
                 drone = self.entities[self.selDrone]
                 return drone.handleCMD(cmd)
-            self.globalvars['class_gconsole'].printMessage("You need to select a drone via 'drone sel <droneid>'", "left")
+            self.globalvars['class_gconsole'].printMessage("You need to select a drone via \"__drone sel <droneid>__\"", "left", markup=True)
+            return True
+        elif cmd.startswith("interact "):
+            if self.selDrone != -1:
+                drone = self.entities[self.selDrone]
+                if not isinstance(drone.currEntity, int):
+                    return drone.currEntity.handleCMD(cmd)
+                self.globalvars['class_gconsole'].printMessage("You need to move w/ this drone via \"__drone mv <to>__\"","left", markup=True)
+            self.globalvars['class_gconsole'].printMessage("You need to select a drone via \"__drone sel <droneid>__\"","left", markup=True)
             return True
         return False

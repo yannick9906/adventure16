@@ -11,6 +11,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 from . import *
 from .drones import *
 from .cRoom import *
+from .cInfotab import *
 
 
 class EntitiesFactory(object):
@@ -39,6 +40,8 @@ class EntitiesFactory(object):
             return DroneFactory(self.globalvars).getDrone(ID, dict)
         elif type == "room":
             return Room.fromDict(self.globalvars, ID, dict)
+        elif type == "infotab":
+            return Infotab.fromDict(self.globalvars, dict)
         elif type == "ship":
             pass
 

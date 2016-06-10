@@ -4,6 +4,14 @@
       "Welcome to dronespace. This is where your story begins.\nSince you have managed to come here, you should be familiar with the controls.\n",
       "** If you have managed to come here...\nYou're awesome!**"
     ],
-    "startundiscoverd":1
+    "startundiscoverd":1,
+    "commands":{
+      "help":{
+        "action":"listcmd"
+      },
+      "info":{
+        "action":"listinfo"
+      }
+    }
   }
 }

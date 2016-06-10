@@ -6,6 +6,8 @@
       "name":"Dr0n3z1us",
       "currHealth":100,
       "currEnergyLevel":450,
+      "currRoom":3,
+      "currEntity":0,
       "inventory": {
 
       }
@@ -16,6 +18,8 @@
       "name":"Dr0n3z1us",
       "currHealth":100,
       "currEnergyLevel":450,
+      "currRoom":3,
+      "currEntity":0,
       "inventory": {
 
       }
@@ -26,6 +30,8 @@
       "name":"IDKwhereIam",
       "currHealth":100,
       "currEnergyLevel":450,
+      "currRoom":3,
+      "currEntity":0,
       "inventory": {
 
       }
@@ -35,14 +41,25 @@
       "name":"Controlroom",
       "commands":{},
       "entities":[
-        4
+        {
+          "type":"infotab",
+          "name":"CEO Seat",
+          "information": "stage1-01",
+          "cleared": 1
+        },
+        {
+          "type":"infotab",
+          "name":"CEO Seat 2",
+          "information": "stage1-01",
+          "cleared": 1
+        }
+      ],
+      "doors":[
+        {
+          "to":0,
+          "locked":true
+        }
       ]
-    },
-    {
-      "type":"infotab",
-      "name":"CEO Seat",
-      "information": "stage1-01",
-      "cleared": 1
     }
   ]
 }

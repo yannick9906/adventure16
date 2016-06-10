@@ -40,6 +40,8 @@ class DroneActionHandler(ActionHandler):
             self.ac_listInfo(args)
         elif action == "move":
             self.ac_move(args)
+        elif action == "listentity":
+            self.ac_listEntity(args)
         else:
             super().handleAction(action, args)
 
@@ -87,6 +89,26 @@ class DroneActionHandler(ActionHandler):
         @param args: dict
         """
         try:
-            self.globalvars['class_gconsole'].printMessage("Moving to \"" + self.valueof(args["entity"], args) + "\"", "left")
+            newEntity = self.dronevars['class'].currRoom.getEntity(int(self.valueof(args["entity"], args)))
+            if newEntity is not None:
+                self.dronevars['class'].currEntity = newEntity
+                self.globalvars['class_gconsole'].printMessage(
+                    "Moving to \"{0}\"".format(newEntity.name), "left")
+                self.dronevars['class'].move(1)
+            else:
+                self.globalvars['class_gconsole'].printMessage(
+                    "That doesn't look like a destination to me...", "left")
         except KeyError:
             self.globalvars['class_gconsole'].printMessage("You should at least provide me a destination, since I hasn't been programmed to dance", "left")
+
+    def ac_listEntity(self, args):
+        room = self.dronevars['class'].currRoom
+        entities = room.getEntities()
+
+        self.globalvars['class_gconsole'].printMessage("This drone is in Room \"__{0}__\".".format(room.name), "left", newline=False, markup=True)
+        for i, entity in enumerate(entities):
+            if self.dronevars['class'].currEntity == entity:
+                self.globalvars['class_gconsole'].printMessage("**{0}: {1} <**".format(i, entity.name), "left", newline=False, markup=True)
+            else:
+                self.globalvars['class_gconsole'].printMessage("{0}: {1}".format(i, entity.name), "left", newline=False)
+        self.globalvars['class_gconsole'].printMessage("Use \"__drone mv <id>__\" to move to one entity.", "left", newline=False, markup=True)

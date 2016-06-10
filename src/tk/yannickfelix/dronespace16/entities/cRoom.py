@@ -17,7 +17,9 @@ class Room(Entity):
 
     def __init__(self, id, name, commands, globalvars, entities):
         super().__init__(name, id, commands, globalvars)
-        self.entities = entities
+
+        from . import EntitiesFactory
+        self.entities = EntitiesFactory(globalvars).getList(entities)
 
     @staticmethod
     def fromDict(globalvars, id, dict):
@@ -30,6 +32,10 @@ class Room(Entity):
         self.entities = temp
 
     def getEntities(self):
-        list = []
-        for entity in self.entities:
-            list.append("{0:3.0f}:> {1}".format(entity.id, entity.name))
+        return self.entities
+
+    def getEntity(self, id):
+        try:
+            return self.entities[id]
+        except IndexError:
+            return None

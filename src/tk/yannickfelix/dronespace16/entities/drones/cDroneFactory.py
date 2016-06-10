@@ -44,6 +44,8 @@ class DroneFactory(object):
             drone.setCurrHealth(dict['currHealth'])
             drone.setID(id)
             drone.setName(dict['name'])
+            drone.setCurrRoom(dict['currRoom'])
+            drone.setCurrEntity(dict['currEntity'])
             return drone
         elif dict['dronetype'] == "scout":
             drone = self.getNewDrone(self.droneTypes['3'])
@@ -51,6 +53,8 @@ class DroneFactory(object):
             drone.setCurrHealth(dict['currHealth'])
             drone.setID(id)
             drone.setName(dict['name'])
+            drone.setCurrRoom(dict['currRoom'])
+            drone.setCurrEntity(dict['currEntity'])
             return drone
 
     def getNewDrone(self, dict):
@@ -63,6 +67,6 @@ class DroneFactory(object):
         @rtype: Drone
         """
         if dict['name'] == "transport":
-            return DroneTransport(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"], dict["cmds"], [], [])
+            return DroneTransport(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"], dict["cmds"])
         elif dict['name'] == "scout":
-            return DroneScout(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"], dict["cmds"], [], [])
+            return DroneScout(self.globalvars, dict["name"], dict["health"], dict["damage"], dict["cargosize"], dict["maxenergy"], dict["baseweight"], dict["baseenergydraw"], dict["cmds"])

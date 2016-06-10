@@ -10,21 +10,26 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 """
 import random
 
+from tk.yannickfelix.dronespace16.entities.cEntity import Entity
 from tk.yannickfelix.jsonNetCode import Filesystem
 
 
-class Infotab(object):
+class Infotab(Entity):
     CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜäöü.,:;-_<>|1234567890!\"$%&/(=){[]}\\?ß+*#'^é"
 
     stages = []
     cleared = 1
 
-    def __init__(self):
-        pass
+    def __init__(self, stages, cleared, name, commands, globalvars):
+        super().__init__(name, -1, commands, globalvars)
+        self.stages = stages
+        self.cleared = cleared
 
-    def fromDict(self, globalvars):
+    @staticmethod
+    def fromDict(globalvars, dict):
         types = Filesystem.loadFile(globalvars["res_folder"]+"/entities/infotabs.json")
-
+        thistype = types[dict["information"]]
+        return Infotab(thistype["stages"], dict["cleared"], dict["name"], thistype["commands"], globalvars)
 
     def getTextObfuscated(self):
         text = ""
@@ -37,3 +42,6 @@ class Infotab(object):
                         char = self.CHARS[random.randint(0, len(self.CHARS)-1)]
                     text += char
         return text
+
+    def detailedInfo(self):
+        return self.getTextObfuscated()

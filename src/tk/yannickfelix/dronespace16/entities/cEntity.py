@@ -8,6 +8,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+from tk.yannickfelix.dronespace16.actions.cEntityActionHandler import EntityActionHandler
 from tk.yannickfelix.dronespace16.cmds import CommandFactory
 
 
@@ -16,7 +17,7 @@ class Entity(object):
     id = 0
     commands = {}
     globalvars = {}
-    parent = None
+    actionhandler = None
 
     def __init__(self, name, id, commands, globalvars):
         """
@@ -35,9 +36,42 @@ class Entity(object):
         self.name = name
         self.globalvars = globalvars
         self.commands = CommandFactory().listOCommands(commands)
+        self.actionhandler = EntityActionHandler(globalvars, self)
 
     def setParent(self, parent):
         self.parent = parent
 
     def update(self):
         pass
+
+    def handleCMD(self, cmd):
+        """
+        Handles issued commands
+        @param cmd: The Command issued
+        @type cmd: str
+
+        @return: success
+        @rtype: bool
+        """
+        cmd = cmd.replace("interact ", "")
+        print("Command:" + cmd)
+        for command in self.commands:
+            if command.isThisCommand(cmd):
+                command.runCommand(self.actionhandler)
+                return True
+        return False
+
+    def detailedInfo(self):
+        return "Name:  **{0}**\n".format(self.name)
+
+    def getCmds(self):
+        """
+        Returns all commands
+        @return: The commands as strings
+        @rtype: str[]
+        """
+        list = []
+        for command in self.commands:
+            list.append(command.command)
+        list.sort()
+        return list
