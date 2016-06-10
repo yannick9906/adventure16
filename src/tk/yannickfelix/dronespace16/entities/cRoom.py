@@ -36,6 +36,8 @@ class Room(Entity):
 
     def getEntity(self, id):
         try:
-            return self.entities[id]
+            if id >= 0:
+                return self.entities[id]
+            return None
         except IndexError:
             return None

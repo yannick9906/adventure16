@@ -43,8 +43,8 @@ class EntityActionHandler(ActionHandler):
 
     def ac_listCMD(self, args):
         """
-        This is a special Drone Action.
-        It lists all available commands for this drone.
+        This is a special Entity Action.
+        It lists all available commands for this entity.
         @param args: dict
         """
         self.globalvars['class_gconsole'].printMessage("Here's what you can do with me:", "left",
@@ -57,8 +57,8 @@ class EntityActionHandler(ActionHandler):
 
     def ac_listInfo(self, args):
         """
-        This is a special Drone Action.
-        It prints a detailed information screen of this drone
+        This is a special Entity Action.
+        It prints a detailed information screen of this entity
         @param args: dict
         """
         self.globalvars['class_gconsole'].printMessage(self.entity.detailedInfo(), "left", autowrap=False,

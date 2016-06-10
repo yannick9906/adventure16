@@ -38,9 +38,6 @@ class Entity(object):
         self.commands = CommandFactory().listOCommands(commands)
         self.actionhandler = EntityActionHandler(globalvars, self)
 
-    def setParent(self, parent):
-        self.parent = parent
-
     def update(self):
         pass
 
@@ -62,6 +59,10 @@ class Entity(object):
         return False
 
     def detailedInfo(self):
+        """
+        @return: Long info string
+        @rtype: str
+        """
         return "Name:  **{0}**\n".format(self.name)
 
     def getCmds(self):

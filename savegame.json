@@ -38,26 +38,164 @@
     },
     {
       "type":"room",
+      "name":"Floor 01",
+      "commands":{},
+      "entities":[
+        {
+          "type":"door",
+          "name":"-> Controlroom",
+          "to":4,
+          "locked":false
+        },
+        {
+          "type":"door",
+          "name":"-> Energy",
+          "to":5,
+          "locked":false
+        },
+        {
+          "type":"door",
+          "name":"-> Drones",
+          "to":8,
+          "locked":false
+        },
+        {
+          "type":"door",
+          "name":"-> Crewbay",
+          "to":6,
+          "locked":false
+        },
+        {
+          "type":"door",
+          "name":"-> Cargo",
+          "to":9,
+          "locked":false
+        },
+        {
+          "type":"door",
+          "name":"-> Airlock 01",
+          "to":7,
+          "locked":false
+        }
+      ]
+    },
+    {
+      "type":"room",
       "name":"Controlroom",
       "commands":{},
       "entities":[
         {
           "type":"infotab",
-          "name":"CEO Seat",
+          "name":"Crew Seat 01 - Start here",
           "information": "stage1-01",
           "cleared": 1
         },
         {
           "type":"infotab",
-          "name":"CEO Seat 2",
-          "information": "stage1-01",
+          "name":"Crew Seat 02",
+          "information": "stage1-03",
           "cleared": 1
-        }
-      ],
-      "doors":[
+        },
         {
-          "to":0,
-          "locked":true
+          "type":"infotab",
+          "name":"Controller Seat",
+          "information": "stage1-02",
+          "cleared": 2
+        },
+        {
+          "type":"infotab",
+          "name":"Captain Seat",
+          "information": "stage1-04",
+          "cleared": 2
+        },
+        {
+          "type":"door",
+          "name":"-> Floor 01",
+          "to":3,
+          "locked":false
+        }
+      ]
+    },
+    {
+      "type":"room",
+      "name":"Energy",
+      "commands":{},
+      "entities":[
+        {
+          "type":"infotab",
+          "name":"Reactor",
+          "information": "stage1-05",
+          "cleared": 1
+        },
+        {
+          "type":"infotab",
+          "name":"Battery",
+          "information": "stage1-06",
+          "cleared": 1
+        },
+        {
+          "type":"door",
+          "name":"-> Floor 01",
+          "to":3,
+          "locked":false
+        }
+      ]
+    },
+    {
+      "type":"room",
+      "name":"Crewbay",
+      "commands":{},
+      "entities":[
+        {
+          "type":"infotab",
+          "name":"Tablet",
+          "information": "stage1-07",
+          "cleared": 1
+        },
+        {
+          "type":"door",
+          "name":"-> Floor 01",
+          "to":3,
+          "locked":false
+        }
+      ]
+    },
+    {
+      "type":"room",
+      "name":"Docking Station 01",
+      "commands":{},
+      "entities":[
+        {
+          "type":"door",
+          "name":"-> Floor 01",
+          "to":3,
+          "locked":false
+        }
+      ]
+    },
+    {
+      "type":"room",
+      "name":"Drone Room",
+      "commands":{},
+      "entities":[
+        {
+          "type":"door",
+          "name":"-> Floor 01",
+          "to":3,
+          "locked":false
+        }
+      ]
+    },
+    {
+      "type":"room",
+      "name":"Cargo",
+      "commands":{},
+      "entities":[
+        {
+          "type":"door",
+          "name":"-> Floor 01",
+          "to":3,
+          "locked":false
         }
       ]
     }

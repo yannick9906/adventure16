@@ -8,6 +8,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+from tk.yannickfelix.dronespace16.entities import Door
 from tk.yannickfelix.jsonNetCode import Filesystem
 from tk.yannickfelix.dronespace16.entities.drones import *
 from tk.yannickfelix.dronespace16.entities import *
@@ -82,6 +83,23 @@ class EntitiesController(object):
                 drone = self.entities[self.selDrone]
                 return drone.handleCMD(cmd)
             self.globalvars['class_gconsole'].printMessage("You need to select a drone via \"__drone sel <droneid>__\"", "left", markup=True)
+            return True
+        elif cmd == "interact":
+            if self.selDrone != -1:
+                drone = self.entities[self.selDrone]
+                if isinstance(drone.currEntity, Door):
+                    if not drone.currEntity.locked:
+                        drone.currRoom = drone.currEntity.to
+                        drone.currEntity = 0
+                        drone.update()
+                        self.globalvars['class_gconsole'].printMessage(
+                            "Moved to room \"__{0}__\"".format(drone.currRoom.name), "left", markup=True)
+                        return True
+                    else:
+                        self.globalvars['class_gconsole'].printMessage(
+                            "Sorry, but this door is locked", "left", markup=True)
+                        return True
+            self.globalvars['class_gconsole'].printMessage("You need to select a drone via \"__drone sel <droneid>__\"","left", markup=True)
             return True
         elif cmd.startswith("interact "):
             if self.selDrone != -1:

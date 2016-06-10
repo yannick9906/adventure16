@@ -144,7 +144,7 @@ class Drone(object):
         if isinstance(self.currRoom, int):
             self.currRoom = self.globalvars['class_entity'].get(self.currRoom)
         if isinstance(self.currEntity, int):
-            self.currEntity = self.currRoom.getEntity(self.currEntity)
+            self.currEntity = self.currRoom.getEntity(self.currEntity-1)
 
     def getInfo(self):
         """

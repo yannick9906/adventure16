@@ -89,7 +89,7 @@ class DroneActionHandler(ActionHandler):
         @param args: dict
         """
         try:
-            newEntity = self.dronevars['class'].currRoom.getEntity(int(self.valueof(args["entity"], args)))
+            newEntity = self.dronevars['class'].currRoom.getEntity(int(self.valueof(args["entity"], args))-1)
             if newEntity is not None:
                 self.dronevars['class'].currEntity = newEntity
                 self.globalvars['class_gconsole'].printMessage(
@@ -108,7 +108,7 @@ class DroneActionHandler(ActionHandler):
         self.globalvars['class_gconsole'].printMessage("This drone is in Room \"__{0}__\".".format(room.name), "left", newline=False, markup=True)
         for i, entity in enumerate(entities):
             if self.dronevars['class'].currEntity == entity:
-                self.globalvars['class_gconsole'].printMessage("**{0}: {1} <**".format(i, entity.name), "left", newline=False, markup=True)
+                self.globalvars['class_gconsole'].printMessage("**{0}: {1} <**".format(i+1, entity.name), "left", newline=False, markup=True)
             else:
-                self.globalvars['class_gconsole'].printMessage("{0}: {1}".format(i, entity.name), "left", newline=False)
+                self.globalvars['class_gconsole'].printMessage("{0}: {1}".format(i+1, entity.name), "left", newline=False)
         self.globalvars['class_gconsole'].printMessage("Use \"__drone mv <id>__\" to move to one entity.", "left", newline=False, markup=True)
