@@ -8,6 +8,6 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
-from yannickfelix.dronespace16 import GameMasterController
+from tk.yannickfelix.dronespace16 import GameMasterController
 
 mc = GameMasterController()

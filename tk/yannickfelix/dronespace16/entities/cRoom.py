@@ -8,7 +8,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
-from yannickfelix.dronespace16.entities.cEntity import Entity
+from tk.yannickfelix.dronespace16.entities.cEntity import Entity
 
 
 class Room(Entity):

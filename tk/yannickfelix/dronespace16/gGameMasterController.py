@@ -8,6 +8,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+import random
 import time
 
 from tk.yannickfelix.dronespace16.gui import *
@@ -131,11 +132,15 @@ class GameMasterController(object):
                     self.globalvars['class_gconsole'].printMessage(
                         "Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
 
-    def cb_droneDestroyed(self, drone, amount):
+    def cb_droneDestroyed(self, drone, amount, x):
         self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has been destroyed(-{2}HP)**".format(drone.droneID, drone.name, amount), "center", newline=False, markup=True)
+        self.globalvars['class_gconsole'].waitAndWrite()
 
-    def cb_droneDamaged(self, drone, amount):
+    def cb_droneDamaged(self, drone, amount, x):
+        print(x)
         self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has been damaged(-{2}HP)**".format(drone.droneID, drone.name, amount), "center", newline=False, markup=True)
+        self.globalvars['class_gconsole'].waitAndWrite()
 
     def cb_droneNoEnergy(self, drone):
         self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has run out of energy. That's sad.**".format(drone.droneID, drone.name), "center", newline=False, markup=True)
+        self.globalvars['class_gconsole'].waitAndWrite()

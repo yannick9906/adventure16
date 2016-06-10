@@ -8,9 +8,9 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
-from yannickfelix.jsonNetCode import Filesystem
-from yannickfelix.dronespace16.entities.drones import *
-from yannickfelix.dronespace16.entities import *
+from tk.yannickfelix.jsonNetCode import Filesystem
+from tk.yannickfelix.dronespace16.entities.drones import *
+from tk.yannickfelix.dronespace16.entities import *
 
 
 class EntitiesController(object):

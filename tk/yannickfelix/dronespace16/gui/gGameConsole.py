@@ -190,8 +190,8 @@ class GGameConsole(tk.Text):
                     # This deletes the markup strings from the output
                     # Only lastline is used so I don't mess up ASCII-Art
                     # previously printed
-                    self.deletePattern("__", start="current")
-                    self.deletePattern("**", start="current")
+                    self.deletePattern("__", start="current -1 line")
+                    self.deletePattern("**", start="current -1 line")
                     # And calling the magic Markupmethod :)
                     self.updateTag(self.text)
 

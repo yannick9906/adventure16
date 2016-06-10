@@ -54,7 +54,7 @@ class DroneActionHandler(ActionHandler):
         """
         if isinstance(value, str):
             if value.startswith("#"):
-                return self.globalvars.get(value[1:], False)
+                return self.dronevars.get(value[1:], False)
             else: return super().valueof(value, args)
         else: return value
 

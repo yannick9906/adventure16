@@ -32,7 +32,7 @@ class Drone(object):
     currEntity = []
 
     actionhandler = None
-    dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":"", "currRoomID":"", "currEntityID":""}
+    dronevars = {}
 
     def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
@@ -64,6 +64,7 @@ class Drone(object):
         self.globalvars = globalvars
         self.baseEnergyDraw = baseenergydraw
         self.commands = CommandFactory().listOCommands(commands)
+        self.dronevars = {"name":"", "type":"", "currHealth":"", "currEnergy":"", "currCargo":"", "maxEnergy":"", "maxHealth":"", "maxCargo":"", "class":"", "baseEnergyDraw":"", "baseWeight":"", "damage":"", "currRoomID":"", "currEntityID":""}
         self.makedronevars()
         self.actionhandler = DroneActionHandler(globalvars, self.dronevars)
 
