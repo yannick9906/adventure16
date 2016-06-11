@@ -51,3 +51,7 @@ class GGameInput(ttk.Entry):
          Deletes everything from this text entry
         """
         self.delete(0, 'end')
+
+    def set(self, text):
+        self.clearUserText()
+        self.insert(0,text)

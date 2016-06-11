@@ -6,7 +6,7 @@
     "cargosize": 1000,
     "maxenergy": 450,
     "baseweight": 500,
-    "baseenergydraw": 0.01,
+    "baseenergydraw": -0.01,
     "cmds": {
       "help":{
         "action":"listcmd"
@@ -24,8 +24,22 @@
       },
       "cam":{
         "action":"listentity"
+      },
+      "charge": {
+        "action":"consumeenergy",
+        "rate":100,
+        "time":5000
+      },
+      "calculate something complex": {
+        "action":"consumeenergy",
+        "rate":-10,
+        "time":10000
+      },
+      "calculate something more complex": {
+        "action":"consumeenergy",
+        "rate":-50,
+        "time":10000
       }
-
     }
   },
   "1":{
@@ -35,7 +49,7 @@
     "cargosize": 10,
     "maxenergy": 400,
     "baseweight": 600,
-    "baseenergydraw": 0.01
+    "baseenergydraw": -0.01
   },
   "2":{
     "name": "missleturret",
@@ -44,7 +58,7 @@
     "cargosize": 50,
     "maxenergy": 300,
     "baseweight": 700,
-    "baseenergydraw": 0.01
+    "baseenergydraw": -0.01
   },
   "3":{
     "name": "scout",
@@ -53,7 +67,7 @@
     "cargosize": 300,
     "maxenergy": 700,
     "baseweight": 500,
-    "baseenergydraw": 0.01,
+    "baseenergydraw": -0.01,
     "cmds": {
       "help":{
         "action":"listcmd"

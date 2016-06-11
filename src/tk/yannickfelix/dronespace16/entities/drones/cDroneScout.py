@@ -37,11 +37,12 @@ class DroneScout(Drone):
         @return: Long info string
         @rtype: str
         """
-        return "Name:  **{0}**\n" \
+        return "Name:    \"**{0}**\"\n" \
                "Typ:     __Scout__\n" \
                "Energie: {1:6.1f}/{2:6.1f}EU ({3:.2f}EU/s)\n" \
                "Cargo:   {4:6.1f}/{5:6.1f}l  ({6:6.1f}kg + {7:6.1f}kg)\n" \
-               "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy,
-                                                                          self.baseEnergyDraw, self.currCargoSize,
+               "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})" \
+               "Loc:     {11}@{12}".format(self.name, self.currEnergyLevel, self.maxEnergy,
+                                                                          self.baseEnergyDraw + self.currEnergyConsumption, self.currCargoSize,
                                                                           self.maxCargosize, self.baseWeight, 0,
-                                                                          self.currHealth, self.maxHealth, self.damage)
+                                                                          self.currHealth, self.maxHealth, self.damage, self.currEntity.name, self.currRoom.name)

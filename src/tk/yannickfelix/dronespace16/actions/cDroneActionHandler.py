@@ -42,6 +42,8 @@ class DroneActionHandler(ActionHandler):
             self.ac_move(args)
         elif action == "listentity":
             self.ac_listEntity(args)
+        elif action == "consumeenergy":
+            self.ac_startEnergyConsumption(args)
         else:
             super().handleAction(action, args)
 
@@ -112,3 +114,8 @@ class DroneActionHandler(ActionHandler):
             else:
                 self.globalvars['class_gconsole'].printMessage("{0}: {1}".format(i+1, entity.name), "left", newline=False)
         self.globalvars['class_gconsole'].printMessage("Use \"__drone mv <id>__\" to move to one entity.", "left", newline=False, markup=True)
+
+    def ac_startEnergyConsumption(self, args):
+        drone = self.dronevars["class"]
+
+        drone.startEnergyConsumption(args["rate"], args["time"])

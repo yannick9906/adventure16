@@ -8,6 +8,8 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+import time
+
 from tk.yannickfelix.dronespace16.entities import *
 from tk.yannickfelix.dronespace16.actions import *
 from tk.yannickfelix.dronespace16.cmds import *
@@ -30,6 +32,10 @@ class Drone(object):
     currEnergyLevel = 0
     currRoom = None
     currEntity = None
+    operating = True
+
+    currEnergyConsumption = 0
+    currEnergyEnd = 0
 
     actionhandler = None
     dronevars = {}
@@ -128,16 +134,13 @@ class Drone(object):
         self.globalvars['cb_destroyed'](self, amount, self.maxHealth)
 
     def move(self, distance):
-        self.currEnergyLevel -= distance * .01 * (self.baseWeight + self.currCargoSize * 10)
+        self.startEnergyConsumption(0 - (distance * .01 * (self.baseWeight + self.currCargoSize * 10)), 1000)
 
     def update(self):
         """
         Should be called once per frame. Updates necessary things...
         """
-        old = self.currEnergyLevel
-        self.currEnergyLevel -= self.baseEnergyDraw / self.globalvars['fps']
-        if self.currEnergyLevel <= 0:
-            if old > 0: self.globalvars['cb_noenergy'](self)
+        self.updateEnergy()
 
         self.makedronevars()
 
@@ -162,7 +165,7 @@ class Drone(object):
                "Typ:     None\n" \
                "Energie: {1:6.1f}/{2:6.1f}EU ({3:.2f}EU/s)\n" \
                "Cargo:   {4:6.1f}/{5:6.1f}l  ({6:6.1f}kg + {7:6.1f}kg)\n" \
-               "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy, self.baseEnergyDraw, self.currCargoSize, self.maxCargosize, self.baseWeight, 0, self.currHealth, self.maxHealth, self.damage)
+               "Health:  {8:6.1f}/{9:6.1f}HP (Damage: {10:02.1f})".format(self.name, self.currEnergyLevel, self.maxEnergy, self.baseEnergyDraw+self.currEnergyConsumption, self.currCargoSize, self.maxCargosize, self.baseWeight, 0, self.currHealth, self.maxHealth, self.damage)
 
     def handleCMD(self, cmd):
         """
@@ -180,6 +183,19 @@ class Drone(object):
                 command.runCommand(self.actionhandler)
                 return True
         return False
+
+    def startEnergyConsumption(self, rate, ms):
+        self.currEnergyConsumption = rate
+        self.currEnergyEnd = time.time() * 1000 + ms
+
+    def updateEnergy(self):
+        if time.time() * 1000 >= self.currEnergyEnd:
+            self.currEnergyConsumption = 0
+        self.currEnergyLevel += (self.currEnergyConsumption + self.baseEnergyDraw) / self.globalvars['fps']
+        if self.currEnergyLevel < 0:
+            self.currEnergyLevel = 0
+            self.operating = False
+            self.globalvars['cb_noenergy'](self)
 
     def getName(self):
         return self.name

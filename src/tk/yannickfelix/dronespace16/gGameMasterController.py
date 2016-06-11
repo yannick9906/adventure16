@@ -20,6 +20,8 @@ from tk.yannickfelix.dronespace16.cStdCommands import *
 class GameMasterController(object):
 
     globalvars = None
+    issued_commands = []
+    selOldCommand = -1
 
     def __init__(self):
         """
@@ -53,6 +55,8 @@ class GameMasterController(object):
         self.globalvars['cb_destroyed'] = self.cb_droneDestroyed
         self.globalvars['cb_damaged'] = self.cb_droneDamaged
         self.globalvars['cb_noenergy'] = self.cb_droneNoEnergy
+        self.globalvars['class_ginput'].bind("<Up>", self.onArrowUp)
+        self.globalvars['class_ginput'].bind("<Down>", self.onArrowDown)
 
         # Welcome / Startup messages -> TODO Auslagern
         self.globalvars['class_gconsole'].printMessage("B.E.N.'s Dronecontroller v2.3b", "left")
@@ -103,8 +107,10 @@ class GameMasterController(object):
         It ensures that every "update()"-Method is called and makes some other magic
         """
         self.globalvars['class_entity'].update()
-        # Get the current command, if there's one
+        # Get the current input, if there's one
         cmd = self.globalvars['class_ginput'].getUserText()
+        if cmd != "":
+            self.selOldCommand = -1
         # Update the command display
         self.globalvars['class_gconsole'].updateInputting(self.globalvars['class_ginput'].get())
         # Handle cmds
@@ -126,12 +132,30 @@ class GameMasterController(object):
         if cmd != "" and cmd != " ":
             # Print the cmd onto the screen
             self.globalvars['class_gconsole'].printMessage(cmd, "right", "", True, False)
+            self.issued_commands.append(cmd)
 
             # This actually handles the cmds
             if not self.globalvars['class_stdcommands'].handleCommands(cmd.lower()):
                 if not self.globalvars['class_entity'].handleCommands(cmd.lower()):
                     self.globalvars['class_gconsole'].printMessage(
                         "Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
+    def onArrowUp(self, arg):
+        if self.selOldCommand == -1 and len(self.issued_commands) != 0:
+            self.selOldCommand = len(self.issued_commands) -1
+            self.globalvars["class_ginput"].set(self.issued_commands[self.selOldCommand])
+        elif len(self.issued_commands) > 0:
+            if self.selOldCommand-1 >= 0:
+                self.selOldCommand -= 1
+            self.globalvars["class_ginput"].set(self.issued_commands[self.selOldCommand])
+
+    def onArrowDown(self, arg):
+        if self.selOldCommand > -1:
+            if self.selOldCommand+1 < len(self.issued_commands):
+                self.selOldCommand += 1
+            else:
+                self.globalvars["class_ginput"].set("")
+                self.selOldCommand = -1
+            self.globalvars["class_ginput"].set(self.issued_commands[self.selOldCommand])
 
     def cb_droneDestroyed(self, drone, amount, x):
         self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has been destroyed(-{2}HP)**".format(drone.droneID, drone.name, amount), "center", newline=False, markup=True)

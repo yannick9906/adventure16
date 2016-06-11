@@ -12,6 +12,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import time
 from . import *
+from .gDroneinfo import *
 from tkinter import messagebox
 
 
@@ -30,6 +31,7 @@ class GWindow(tk.Tk):
     mainFrame = None
     gameConsole = None
     gameInput = None
+    droneInfo = None
     upsLabel = None
 
     def __init__(self, globalvars, title="Dronespace", size=(1024, 576)):
@@ -71,10 +73,13 @@ class GWindow(tk.Tk):
         self.gameConsole = GGameConsole(self.mainFrame, globalvars)
         self.gameInput = GGameInput(self.mainFrame)
         self.upsLabel = tk.Text(master=self.mainFrame, background="black", font=("Banana Square", 18), fg="red", borderwidth=0)
+        self.droneInfo = GDroneinfo(self.mainFrame)
+
         # Adding UI Components to window
         self.mainFrame.pack(fill=tk.BOTH, expand=1)
         self.gameConsole.place(x=0, y=0, height=h, width=w)
         self.gameInput.place(x=-30, y=-30, height=0, width=0)
+        self.droneInfo.pack(side=tk.RIGHT)
         # self.upsLabel.place(x=2, y=2, height=35, width=150)
 
         # Add Keylisteners
@@ -95,6 +100,11 @@ class GWindow(tk.Tk):
         currentHeight = self.mainFrame.winfo_height()
         currentWidth = self.mainFrame.winfo_width()
         self.gameConsole.place(x=0, y=0, height=currentHeight, width=currentWidth)
+        if self.globalvars["class_entity"].selDrone != -1:
+            self.droneInfo.setDrone(self.globalvars["class_entity"].entities[self.globalvars["class_entity"].selDrone])
+        else:
+            self.droneInfo.setDrone(None)
+        self.droneInfo.update()
         # Checks if the fullscreenvalue in globalvars has changed
         if self.isFullscreen != self.globalvars['fullscreen']:
             # And changes the fullscreen state
