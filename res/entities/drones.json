@@ -25,11 +25,6 @@
       "cam":{
         "action":"listentity"
       },
-      "charge": {
-        "action":"consumeenergy",
-        "rate":100,
-        "time":5000
-      },
       "calculate something complex": {
         "action":"consumeenergy",
         "rate":-10,
@@ -85,6 +80,16 @@
       },
       "cam":{
         "action":"listentity"
+      },
+      "calculate something complex": {
+        "action":"consumeenergy",
+        "rate":-10,
+        "time":10000
+      },
+      "calculate something more complex": {
+        "action":"consumeenergy",
+        "rate":-50,
+        "time":10000
       }
 
     }

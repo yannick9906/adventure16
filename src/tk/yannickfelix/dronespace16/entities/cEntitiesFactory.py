@@ -8,6 +8,7 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 
 @author Yannick Félix
 """
+from tk.yannickfelix.dronespace16.entities.cChargingPot import ChargingPot
 from . import *
 from .drones import *
 from .cRoom import *
@@ -46,6 +47,8 @@ class EntitiesFactory(object):
             return Infotab.fromDict(self.globalvars, dict)
         elif type == "door":
             return Door.fromDict(self.globalvars, dict)
+        elif type == "chargingPot":
+            return ChargingPot.fromDict(self.globalvars, dict)
 
     def getList(self, dict):
         """

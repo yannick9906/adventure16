@@ -38,6 +38,8 @@ class EntityActionHandler(ActionHandler):
             self.ac_listCMD(args)
         elif action == "listinfo":
             self.ac_listInfo(args)
+        elif action == "chargedrone":
+            self.ac_chargeDrone(args)
         else:
             super().handleAction(action, args)
 
@@ -63,3 +65,12 @@ class EntityActionHandler(ActionHandler):
         """
         self.globalvars['class_gconsole'].printMessage(self.entity.detailedInfo(), "left", autowrap=False,
                                                        markup=True)
+
+    def ac_chargeDrone(self, args):
+        """
+        This is a special Entity Action.
+        It charges a drone at given speed
+        @param args: dict
+        """
+        drone = self.globalvars["class_entity"].entities[self.globalvars['class_entity'].selDrone]
+        drone.startEnergyConsumption(args['rate'], 10000)

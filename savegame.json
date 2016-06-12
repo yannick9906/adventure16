@@ -94,13 +94,13 @@
           "type":"infotab",
           "name":"Crew Seat 02",
           "information": "stage1-03",
-          "cleared": 3
+          "cleared": 2
         },
         {
           "type":"infotab",
           "name":"Controller Seat",
           "information": "stage1-02",
-          "cleared": 2
+          "cleared": 3
         },
         {
           "type":"infotab",
@@ -150,7 +150,7 @@
           "type":"infotab",
           "name":"Tablet",
           "information": "stage1-07",
-          "cleared": 1
+          "cleared": 2
         },
         {
           "type":"door",
@@ -183,6 +183,14 @@
           "name":"-> Floor 01",
           "to":3,
           "locked":false
+        },
+        {
+          "type":"chargingPot",
+          "name":"Charging Station 00"
+        },
+        {
+          "type":"chargingPot",
+          "name":"Charging Station 01"
         }
       ]
     },
