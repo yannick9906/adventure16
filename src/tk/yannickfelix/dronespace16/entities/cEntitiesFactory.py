@@ -20,6 +20,7 @@ class EntitiesFactory(object):
 
     def __init__(self, globalvars):
         """
+        This class can create entities from a specific dict
         @type globalvars: dict
         """
         self.globalvars = globalvars

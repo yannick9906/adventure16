@@ -9,5 +9,5 @@ http://creativecommons.org/licenses/by-nc-sa/4.0/.
 @author Yannick Félix
 """
 from tk.yannickfelix.dronespace16 import GameMasterController
-
+# This only starts the game
 mc = GameMasterController()

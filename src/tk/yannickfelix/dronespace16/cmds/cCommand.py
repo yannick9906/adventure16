@@ -17,7 +17,7 @@ class Command(object):
 
     def __init__(self, command, action):
         """
-
+        This is a class representation of a string
         @param command: The Command String
         @param action: The Action to do when cmd is issued
 
@@ -33,7 +33,7 @@ class Command(object):
 
     def isThisCommand(self, cmd):
         """
-
+        Checks if a string belongs to this command
         @param cmd: The Command String to check
         @type cmd: str
         @return: If this Command is this string
@@ -50,6 +50,7 @@ class Command(object):
     def getAction(self):
         """
         @deprecated
+        @see runCommand()
         @return: The action
         @rtype: dict
         """

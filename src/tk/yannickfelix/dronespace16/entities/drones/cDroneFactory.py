@@ -21,6 +21,7 @@ class DroneFactory(object):
 
     def __init__(self, globalvars):
         """
+        This class can create drones from dicts
         @type globalvars: dict
         """
         self.globalvars = globalvars

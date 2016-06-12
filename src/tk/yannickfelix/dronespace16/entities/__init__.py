@@ -13,7 +13,6 @@ from tk.yannickfelix.dronespace16.entities.cEntitiesFactory import *
 from tk.yannickfelix.dronespace16.entities.cRoom import *
 from tk.yannickfelix.dronespace16.entities.cEntity import *
 from tk.yannickfelix.dronespace16.entities.cInfotab import *
-from tk.yannickfelix.dronespace16.entities.cShip import *
 
 __all__ = [Room, EntitiesFactory, Entity, Infotab]
 __all__ = ["Room", "EntitiesFactory", "Entity", "Infotab"]

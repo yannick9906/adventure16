@@ -18,12 +18,41 @@ class Door(Entity):
     to = 1
 
     def __init__(self, to, locked, name, commands, globalvars):
+        """
+        This class is a door class
+
+        @param to: Where this door goes
+        @param locked: If the door is locked
+        @param name: The name of this door
+        @param commands: The commands you can issue
+        @param globalvars: The usual globalvars
+
+        @type to: int
+        @type locked: bool
+        @type name: str
+        @type commands: dict
+        @type globalvars: dict
+        """
+        # -1 is used as id because this is a subentity
         super().__init__(name, -1, commands, globalvars)
         self.locked = locked
         self.to = to
 
     @staticmethod
     def fromDict(globalvars, dict):
+        """
+        Creates a door
+        @see EntitiesFactory
+
+        @param globalvars: The usual globalvars
+        @param dict: the dict used to create a instance
+
+        @type globalvars: dict
+        @type dict: dict
+
+        @return: The created instance
+        @rtype: Door
+        """
         cmds = {}
         return Door(dict["to"], dict["locked"], dict["name"], cmds, globalvars)
 

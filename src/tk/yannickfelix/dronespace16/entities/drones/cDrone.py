@@ -42,6 +42,9 @@ class Drone(object):
 
     def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
+        This is the basic drone class
+        All Types of drones have own subclasses
+
         @param globalvars: The usual globalvars
         @param name: The drones name
         @param maxhealth: The maximum health value in HP
@@ -74,17 +77,10 @@ class Drone(object):
         self.makedronevars()
         self.actionhandler = DroneActionHandler(globalvars, self.dronevars)
 
-    def resetVars(self):
-        """
-        Resets the field of this class.
-        """
-        self.currHealth = self.maxHealth
-        self.currEnergyLevel = self.maxEnergy
-        self.currCargoSize = self.baseWeight
-
     def makedronevars(self):
         """
         This method is used to update the dict representaion of this class
+        The dict is used for access from action
         """
         self.dronevars["type"] = "none"
         self.dronevars["name"] = self.name
@@ -101,7 +97,7 @@ class Drone(object):
 
     def getCmds(self):
         """
-        Returns all commands
+        Returns all commands as list
         @return: The commands as strings
         @rtype: str[]
         """
@@ -113,7 +109,7 @@ class Drone(object):
 
     def takeDamage(self, amount):
         """
-
+        This method will be called when the drone gets damaged
         @param amount: The Amount of Damage
         @type amount: float
         """
@@ -151,6 +147,7 @@ class Drone(object):
 
     def getInfo(self):
         """
+        Oneliner
         @return: Short info string
         @rtype: str
         """
@@ -158,6 +155,7 @@ class Drone(object):
 
     def detailedInfo(self):
         """
+        Multilines
         @return: Long info string
         @rtype: str
         """
@@ -176,27 +174,55 @@ class Drone(object):
         @return: success
         @rtype: bool
         """
-        cmd = cmd.replace("drone ", "")
-        print("Command:" + cmd)
-        for command in self.commands:
-            if command.isThisCommand(cmd):
-                command.runCommand(self.actionhandler)
-                return True
-        return False
+        if self.operating:
+            cmd = cmd.replace("drone ", "")
+            print("Command:" + cmd)
+            for command in self.commands:
+                if command.isThisCommand(cmd):
+                    command.runCommand(self.actionhandler)
+                    return True
+            return False
+        else:
+            self.globalvars["gui_console"].printMessage("This drone is disabled. Please select another drone.", "left", "")
 
     def startEnergyConsumption(self, rate, ms):
+        """
+        This starts consuming energy.
+        Only one consuming at a time!
+        @param rate: The rate in EU/s
+        @param ms: The time in ms
+
+        @type rate: float
+        @type ms: int
+        """
         self.currEnergyConsumption = rate
         self.currEnergyEnd = time.time() * 1000 + ms
 
     def updateEnergy(self):
+        """
+        This consumes energy and does other magic
+        """
+        # If the consume time is reached reset current Consumption
         if time.time() * 1000 >= self.currEnergyEnd:
             self.currEnergyConsumption = 0
-        self.currEnergyLevel += (self.currEnergyConsumption + self.baseEnergyDraw) / self.globalvars['fps']
+
+        # If the drone has energy
+        if self.currEnergyLevel > 0:
+            self.currEnergyLevel += (self.currEnergyConsumption + self.baseEnergyDraw) / self.globalvars['fps']
+
+        # If the drone is fully charged
+        if self.currEnergyLevel >= self.maxEnergy:
+            self.currEnergyLevel = self.maxEnergy
+
+        # If the drone has less than no energy
         if self.currEnergyLevel < 0:
+            # Reset to no energy and
             self.currEnergyLevel = 0
             self.operating = False
+            # call the noenergy callback
             self.globalvars['cb_noenergy'](self)
 
+    # Getter and setter
     def getName(self):
         return self.name
 

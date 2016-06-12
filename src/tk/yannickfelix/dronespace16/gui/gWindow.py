@@ -114,6 +114,8 @@ class GWindow(tk.Tk):
         self.timesincelastframe = time.time() - self.lastFrame
         self.globalvars['frametime'] = self.timesincelastframe
         self.lastFrame = time.time()
+        # Sadly there's no way to get the system time in nanoseconds, so the fps display is limited
+        # to ~2000 f/s
         self.upsLabel.delete("1.0", tk.END)
 
         # Some easier method for the ups

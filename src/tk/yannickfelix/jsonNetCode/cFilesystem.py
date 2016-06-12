@@ -18,4 +18,12 @@ class Filesystem(object):
 
     @staticmethod
     def loadFile(filename):
+        """
+        Loads the given file and parses JSON
+        @param filename: The file to load
+        @type filename: str
+
+        @return: A parsed version
+        @rtype: dict
+        """
         return json.load(open(filename, "r"))

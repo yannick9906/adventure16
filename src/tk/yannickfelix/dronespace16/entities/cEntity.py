@@ -21,7 +21,9 @@ class Entity(object):
 
     def __init__(self, name, id, commands, globalvars):
         """
-        Entity Constructor
+        This is an simple Entity class. It is not used.
+        All Entities are subclasses of this one
+
         @param name: The name of this Entity
         @param id: The Entities ID
         @param commands: The raw commands
@@ -39,6 +41,11 @@ class Entity(object):
         self.actionhandler = EntityActionHandler(globalvars, self)
 
     def update(self):
+        """
+        This method should be called once per frame
+        Here it is empty because there's nothing to update
+        but it is need for the subclasses to work
+        """
         pass
 
     def handleCMD(self, cmd):

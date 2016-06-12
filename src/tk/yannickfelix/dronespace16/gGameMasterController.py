@@ -62,7 +62,8 @@ class GameMasterController(object):
         self.globalvars['class_gconsole'].printMessage("B.E.N.'s Dronecontroller v2.3b", "left")
         self.globalvars['class_gconsole'].printMessage("Starting Services...", "left")
         self.globalvars['class_gconsole'].printMessage("We're searching for files...", "left")
-        text = """
+        # text =
+        """
                                          ,
                   ,-.       _,---._ __  / \\
                  /  )    .-'       `./ /   \\
@@ -89,34 +90,26 @@ class GameMasterController(object):
         self.globalvars['class_gui'].destroy()
         self.globalvars['class_gui'].quit()
 
-    def load(self):
-        """
-        @deprecated
-        """
-        pass
-        """json = Filesystem.loadFile("../../savegame.json")
-        i = 0
-        for elem in json:
-            if json[elem]['class'] == "drone":
-                self.entities.append(Drone.fromDict(i, json[elem], self.textoutput.printMessage))
-            i += 1"""
-
     def update(self):
         """
         This method is called by the constructor of this class every 20ms.
         It ensures that every "update()"-Method is called and makes some other magic
         """
+        # Updates all entities
         self.globalvars['class_entity'].update()
+
         # Get the current input, if there's one
         cmd = self.globalvars['class_ginput'].getUserText()
         if cmd != "":
             self.selOldCommand = -1
+
         # Update the command display
         self.globalvars['class_gconsole'].updateInputting(self.globalvars['class_ginput'].get())
         # Handle cmds
         self.handleCmd(cmd)
         # Next writing step
         self.globalvars['class_gconsole'].writeTick()
+
         # Update UI
         self.globalvars['class_gui'].update()
         self.globalvars['class_ginput'].focus()
@@ -139,7 +132,12 @@ class GameMasterController(object):
                 if not self.globalvars['class_entity'].handleCommands(cmd.lower()):
                     self.globalvars['class_gconsole'].printMessage(
                         "Sorry, I think you misspelled this command... Maybe a cookie would help...", "left", "")
+
     def onArrowUp(self, arg):
+        """
+        This callback will be called when the UP-Arrow on the keyboard is pressed
+        It switches to the last command issued, if there is one
+        """
         if self.selOldCommand == -1 and len(self.issued_commands) != 0:
             self.selOldCommand = len(self.issued_commands) -1
             self.globalvars["class_ginput"].set(self.issued_commands[self.selOldCommand])
@@ -149,6 +147,11 @@ class GameMasterController(object):
             self.globalvars["class_ginput"].set(self.issued_commands[self.selOldCommand])
 
     def onArrowDown(self, arg):
+        """
+        This callback will be called when the DOWN-Arrow on the keyboard is pressed
+        It undo's above command
+        @param arg:
+        """
         if self.selOldCommand > -1:
             if self.selOldCommand+1 < len(self.issued_commands):
                 self.selOldCommand += 1
@@ -162,7 +165,6 @@ class GameMasterController(object):
         self.globalvars['class_gconsole'].waitAndWrite()
 
     def cb_droneDamaged(self, drone, amount, x):
-        print(x)
         self.globalvars['class_gconsole'].printMessage("**Drone {0}<{1}> has been damaged(-{2}HP)**".format(drone.droneID, drone.name, amount), "center", newline=False, markup=True)
         self.globalvars['class_gconsole'].waitAndWrite()
 

@@ -15,6 +15,10 @@ class DroneTransport(Drone):
 
     def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
+        This is a specific drone class
+        You should create a drone with
+        @see DroneFactory
+
         @param name: The drones name
         @param maxhealth: The maximum health value in HP
         @param damage: The damage this class does to enemies with one hit
@@ -31,9 +35,9 @@ class DroneTransport(Drone):
         """
         super().__init__(globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands )
 
-
     def detailedInfo(self):
         """
+        Multiliner
         @return: Long info string
         @rtype: str
         """
@@ -45,4 +49,4 @@ class DroneTransport(Drone):
                "Loc:     {11}@{12}".format(self.name, self.currEnergyLevel, self.maxEnergy,
                                                                           self.baseEnergyDraw + self.currEnergyConsumption, self.currCargoSize,
                                                                           self.maxCargosize, self.baseWeight, 0,
-                                                                          self.currHealth, self.maxHealth, self.damage, self.currEntity.name, self.currRoom.name)
+                                                                          self.currHealth, self.maxHealth, self.damage, self.currEntity.name if self.currEntity is not None else "?", self.currRoom.name)

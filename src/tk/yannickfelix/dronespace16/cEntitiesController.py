@@ -37,12 +37,20 @@ class EntitiesController(object):
 
     def load(self):
         """
-        This loads the json savegame
+        This loads the json savegame and
+        creates entities from this savegame
         """
         savegame = Filesystem.loadFile("../../../savegame.json")
         self.entities = EntitiesFactory(self.globalvars).getList(savegame['entities'])
 
     def get(self, id):
+        """
+        Get a specific entities by it's id
+        @param id: The EntityID
+        @type id: int
+        @return: The requested entity or None
+        @rtype: Entity
+        """
         try:
             return self.entities[id]
         except IndexError:
@@ -57,17 +65,20 @@ class EntitiesController(object):
         @return: success
         @rtype: bool
         """
+        # Lists all available drones
         if cmd == "drones":
             for e in self.entities:
-                if isinstance(e, Drone):
+                if isinstance(e, Drone):  # Only if the entity is an instance of Drone
                     if self.selDrone == e.getID():  drone = e.getInfo() + " <"
                     else: drone = e.getInfo()
                     self.globalvars['class_gconsole'].printMessage(drone, "left",newline=False)
             self.globalvars['class_gconsole'].printMessage("Type in \"__drone sel <droneid>__\" to select a drone","left",newline=False, markup=True)
             return True
+        # Selects a adrone
         elif cmd.startswith("drone sel"):
             cmd = cmd.split(" ")
             try:
+                # cmd[2] is the drones id
                 if int(cmd[2]) <= len(self.entities):
                     if isinstance(self.entities[int(cmd[2])], Drone):
                         self.selDrone = int(cmd[2])
@@ -75,15 +86,18 @@ class EntitiesController(object):
                     else: self.globalvars['class_gconsole'].printMessage("This drone does not exist (yet).", "left")
                 else: self.globalvars['class_gconsole'].printMessage("This drone does not exist (yet).", "left")
             except IndexError:
+                # If no id is given, cmd[2] throws a IndexError
                 self.globalvars['class_gconsole'].printMessage("Please provide a DroneID", "left")
             finally:
                 return True
+        # All Cmd starting with drone will be forwarded to the current drone
         elif cmd.startswith("drone "):
             if self.selDrone != -1:
                 drone = self.entities[self.selDrone]
                 return drone.handleCMD(cmd)
             self.globalvars['class_gconsole'].printMessage("You need to select a drone via \"__drone sel <droneid>__\"", "left", markup=True)
             return True
+        # Interact opens doors
         elif cmd == "interact":
             if self.selDrone != -1:
                 drone = self.entities[self.selDrone]
@@ -101,6 +115,7 @@ class EntitiesController(object):
                         return True
             self.globalvars['class_gconsole'].printMessage("You need to select a drone via \"__drone sel <droneid>__\"","left", markup=True)
             return True
+        # All cmds starting with interact will be forwarded to an entity (not to drones because it's already handled above)
         elif cmd.startswith("interact "):
             if self.selDrone != -1:
                 drone = self.entities[self.selDrone]

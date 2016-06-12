@@ -15,6 +15,10 @@ class DroneScout(Drone):
 
     def __init__(self, globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands):
         """
+        This is a specific drone class
+        You should create a drone with
+        @see DroneFactory
+
         @param name: The drones name
         @param maxhealth: The maximum health value in HP
         @param damage: The damage this class does to enemies with one hit
@@ -31,9 +35,9 @@ class DroneScout(Drone):
         """
         super().__init__(globalvars, name, maxhealth, damage, maxcargosize, maxenergy, baseweight, baseenergydraw, commands)
 
-
     def detailedInfo(self):
         """
+        Multiliner
         @return: Long info string
         @rtype: str
         """
