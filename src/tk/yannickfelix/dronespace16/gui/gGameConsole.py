@@ -164,9 +164,6 @@ class GGameConsole(tk.Text):
             # Add the line to me
             self.insert(tk.END, " " * (self.viewX-lineLength) + currInput + caret + " <")
 
-            # Scroll down
-            self.see(tk.END)
-
     def writeTick(self):
         """
         This method should be called once per frame.
@@ -198,6 +195,8 @@ class GGameConsole(tk.Text):
                 # Remove this char from the text
                 self.previousChar = self.text[:1]
                 self.text = self.text[1:]
+                # Scroll down
+                self.see(tk.END)
             elif self.text == "" and self.isWriting == True:
                 # Wrinting is finished
                 # Turn of writing
@@ -206,8 +205,6 @@ class GGameConsole(tk.Text):
                 self.highlight_pattern(self.lastname + ">", "BOLD")
                 self.highlight_pattern(">" + self.lastname, "BOLD")
                 self.markup = False
-            # Scroll down
-            self.see(tk.END)
             # update View Values
             self.viewX = int(self.master.winfo_width() / self.fontfactor)
 

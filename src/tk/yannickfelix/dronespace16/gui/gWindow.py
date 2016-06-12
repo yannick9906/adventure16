@@ -153,6 +153,7 @@ class GWindow(tk.Tk):
             self.gameConsole.waitAndWrite()
             time.sleep(1)  # For the special effect :)
             self.attributes("-fullscreen", 0)  # Turn off fullscreen
+            self.attributes("-topmost", "no")  # Removes this magic
 
             # Set the window into its inital size
             startx = int((w * .5) - (self.initalsize[0] * .5))  # Calculations for centering the window
