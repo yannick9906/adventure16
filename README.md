@@ -1,6 +1,7 @@
 DroneSpace
 ==========
 
+Please see [The new Java Repository, with continuation of this project](https://github.com/yannick9906/dronespace-java)
 Story
 -----
 
